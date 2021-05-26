@@ -1,0 +1,52 @@
+<view class="index_container">
+  <swiper class="banners" indicator-dots indicator-color='ivory' indicator-active-color='#d43c33' autoplay>
+    <swiper-item wx:for='{{bannerList}}' wx:key='bannerId'>
+      <image src='{{item.pic}}'></image>
+    </swiper-item>
+  </swiper>
+  <!-- 图标导航区域 -->
+  <view class="navContent">
+    <view class="nav-item">
+      <text class="iconfont icon-tuijian1"></text>
+      <text class="title">每日推荐</text>
+    </view>
+    <view class="nav-item">
+      <text class="iconfont icon-gedan"></text>
+      <text class="title">歌单</text>
+    </view>
+    <view class="nav-item">
+      <text class="iconfont icon-paihangbang--"></text>
+      <text class="title">排行榜</text>
+    </view>
+    <view class="nav-item ">
+      <text class="iconfont icon-diantai"></text>
+      <text class="title">电台</text>
+    </view>
+    <view class="nav-item">
+      <text class="iconfont icon-zhibo1"></text>
+      <text class="title">直播</text>
+    </view>
+  </view>
+  <!-- 歌曲推荐模块 -->
+  <view class="recommend">
+    <view class="header">
+      <text class="recommend-title">推荐歌曲</text>
+      <view>
+        <text class="recommendyou">为你精心推荐</text>
+        <text class="more">查看更多</text>
+      </view>
+    </view>
+    <scroll-view class="recommend-content" enable-flex scroll-x>
+      <view class="recommend-item" wx:for='{{recommendList}}' wx:key='id'>
+        <view class="image">
+          <image src='{{item.picUrl}}'></image>
+        </view>
+        <text class="introduce">{{item.name}}</text>
+      </view>
+    </scroll-view>
+
+
+  </view>
+
+
+</view>

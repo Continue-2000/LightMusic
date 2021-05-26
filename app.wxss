@@ -1,0 +1,4 @@
+@import '/static/iconfont/index.wxss';
+pages{
+  height: 100%
+}
