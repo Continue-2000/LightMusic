@@ -1,0 +1,12 @@
+<!-- 头部区域 -->
+<view class="header">
+  <image src='/static/images/video/video.jpg'></image>
+  <view class="search">搜索</view>
+  <image src='/static/images/video/add.png'></image>
+</view>
+<!-- 头部选择区域 -->
+<scroll-view class='topScroll' scroll-x enable-flex>
+  <view class="scrollItem" wx:for='{{videoGroupList}}' wx:key="id" bindtap='itemClick' id='{{item.id}}'>
+    <view class="itemContent {{currentId===item.id?'active':''}}">{{item.name}}</view>
+  </view>
+</scroll-view>

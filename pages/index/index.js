@@ -8,7 +8,8 @@ Page({
    */
   data: {
     bannerList: [],
-    recommendList: []
+    recommendList: [],
+    rankList: []
   },
 
   /**
@@ -21,6 +22,21 @@ Page({
       bannerList: bannerList.banners,
       recommendList: recommendList.result
     })
+    let rankindex = 0;
+    let arr = []
+    while (rankindex < 5) {
+      let rankList = await request('/top/list', { idx: rankindex++ })
+      rankList = rankList.playlist;
+      let musicItem = {
+        id: rankList.id,
+        titleName: rankList.name,
+        tracks: rankList.tracks.slice(0, 3)
+      };
+      arr.push(musicItem)
+      this.setData({
+        rankList: arr
+      })
+    }
   },
 
   /**

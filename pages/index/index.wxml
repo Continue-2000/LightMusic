@@ -29,13 +29,7 @@
   </view>
   <!-- 歌曲推荐模块 -->
   <view class="recommend">
-    <view class="header">
-      <text class="recommend-title">推荐歌曲</text>
-      <view>
-        <text class="recommendyou">为你精心推荐</text>
-        <text class="more">查看更多</text>
-      </view>
-    </view>
+    <NavHeader title='推荐歌'></NavHeader>
     <scroll-view class="recommend-content" enable-flex scroll-x>
       <view class="recommend-item" wx:for='{{recommendList}}' wx:key='id'>
         <view class="image">
@@ -44,9 +38,23 @@
         <text class="introduce">{{item.name}}</text>
       </view>
     </scroll-view>
-
-
   </view>
-
-
+  <!-- 排行榜模块 -->
+  <view class="ranking">
+    <NavHeader title='排行榜'></NavHeader>
+    <swiper class='ranking-content' circular next-margin="60rpx">
+      <swiper-item class="ranking-item" wx:for='{{rankList}}' wx:key='id'>
+        <view class="swiperItem">
+          <view class='title'>{{item.titleName}}</view>
+          <view class="songs">
+            <view class="song-item" wx:for='{{item.tracks}}' wx:for-item="songitem" wx:key="id" wx:for-index="songindex">
+              <image src='{{songitem.al.picUrl}}'></image>
+              <text class='count'>{{songindex+1}}</text>
+              <text class='songname'>{{songitem.name}}</text>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
 </view>

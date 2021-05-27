@@ -1,0 +1,20 @@
+/* components/navheader/NavHeader.wxss */
+.header{
+  padding: 40rpx 0;
+}
+.recommend-title{
+  font-size: 40rpx;
+  font-weight: 500;
+  color: #000;
+}
+.more{
+  display: block;
+  width: 120rpx;
+  height: 50rpx;
+  text-align: center;
+  line-height: 50rpx;
+  float: right;
+  border: 1rpx solid rgb(71, 71, 71);
+  font-size: 26rpx;
+  border-radius: 32rpx;
+}

@@ -18,7 +18,8 @@ swiper-item image{
 .navContent{
   display: flex;
   width: 100%;
-  margin-top: 40rpx;
+  padding: 40rpx 0;
+  border-bottom: 1rpx solid #ccc;
 }
 .nav-item{
   flex: 1;
@@ -43,32 +44,13 @@ swiper-item image{
   font-size: 28rpx;
   margin-top:10rpx ;
 }
+
 .recommend{
   padding: 20rpx;
-}
-.recommend-title{
-  font-size: 34rpx;
-  color: #666;
-}
-.header view{
-  margin-top: 20rpx;
-}
-.recommendyou{
-  font-size: 36rpx;
-}
-.more{
-  display: block;
-  width: 160rpx;
-  height: 50rpx;
-  text-align: center;
-  line-height: 50rpx;
-  float: right;
-  border: 1rpx solid #000;
-  font-size: 28rpx;
-  border-radius: 32rpx;
+  border-bottom: 20rpx solid #eee;
 }
 .recommend-content{
-  margin-top: 20rpx;
+  height: 300rpx;
   display: flex;
 }
 .recommend-item{
@@ -94,3 +76,42 @@ image{
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
+/* 排行榜区域 */
+.ranking{
+  padding: 20rpx;
+}
+ .ranking-content{
+   margin-top: 20rpx;
+  height: 500rpx;
+  display: flex;
+ }
+
+.swiperItem{
+  width: 90%;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  background: rgb(245, 245, 245);
+  
+}
+ .song-item{
+  padding: 20rpx;
+  display: flex;
+}
+.song-item image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 20rpx;
+}
+.count{
+  display: block; 
+  width: 50rpx;
+  height: 100rpx;
+  text-align: center;
+  line-height: 100rpx;
+}
+.songname{
+  display: block;
+  flex: 1;
+  height: 100rpx;
+  line-height: 100rpx;
+} 
