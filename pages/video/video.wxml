@@ -5,8 +5,17 @@
   <image src='/static/images/video/add.png'></image>
 </view>
 <!-- 头部选择区域 -->
-<scroll-view class='topScroll' scroll-x enable-flex>
-  <view class="scrollItem" wx:for='{{videoGroupList}}' wx:key="id" bindtap='itemClick' id='{{item.id}}'>
-    <view class="itemContent {{currentId===item.id?'active':''}}">{{item.name}}</view>
+<scroll-view class='topScroll' scroll-x enable-flex scroll-into-view='{{"scroll"+currentId}}' scroll-with-animation>
+  <view class="scrollItem" wx:for='{{videoGroupList}}' wx:key="id" bindtap='itemClick' id='{{"scroll"+item.id}}' data-id='{{item.id}}'>
+    <view class="itemContent {{currentId==item.id?'active':''}}">{{item.name}}</view>
+  </view>
+</scroll-view>
+<!-- 视频滑动区域 -->
+<scroll-view class="videoScroll" scroll-y bindrefresherrefresh="handleRefresher" refresher-enabled refresher-triggered="{{isRefresher}}" bindscrolltolower="handleLoadMore">
+  <view class="videoScrollItem" wx:for='{{videoGroupData}}' wx:key="threadId">
+    <video wx:if="{{item.vid==playingId}}" class="common" src="{{item.urlInfo.url}}" style="backgroundImage:'{{item.coverUrl}}'" bindplay='videoClick' id='{{item.vid}}' object-fit='fill' bindtimeupdate='handleTimeUpdate' bindended='handleEnded' initial-time='{{initplace}}' loop></video>
+    <image wx:else src="{{item.coverUrl}}" class="common" bindtap='videoClick' id='{{item.vid}}' />
+    <view class="title">{{item.title}}</view>
+    <view class="avator">{{item.creator.nickname}}</view>
   </view>
 </scroll-view>

@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/video/video",
-    "pages/profile/profile",
     "pages/index/index",
+    "pages/profile/profile",
     "pages/login/login"
   ],
   "window": {
