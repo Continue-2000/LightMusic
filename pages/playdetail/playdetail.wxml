@@ -1,0 +1,43 @@
+<view class="palydetailContainer">
+  <text class="singer">
+    <text wx:for='{{song.ar}}' wx:key="id">{{item.name}}</text>
+  </text>
+  <view class="midContent">
+    <image class='neddle {{playing &&"Play"}}' src='/static/images/playdetail/needle2.png' />
+    <view class="disc  {{playing &&'discplay'}}">
+      <image class='discimage' src='/static/images/playdetail/disc.png' />
+      <image class="songimage" src="{{song.al.picUrl}}" />
+    </view>
+  </view>
+  <!-- 进度条区域 -->
+  <view class="progressBar">
+    <text class="countTime ">{{currentTime}}</text>
+    <view class="lineBar">
+      <view class="curentTimeBar" style="width:{{processLength+'rpx'}}">
+        <view class="currentCircle"></view>
+      </view>
+    </view>
+    <text class="countTime ">{{totalTime}}</text>
+  </view>
+  <!-- 底部控制区域 -->
+  <view class="buttomcontrol">
+    <view class="order">
+      <image src='/static/images/playdetail/singerPlay.png'></image>
+    </view>
+    <view class="pre">
+      <image src='/static/images/playdetail/pre.png' bindtap='handleCutSong' data-type='pre'></image>
+    </view>
+    <view class="play">
+      <view class="box" bindtap='handlePlay'>
+        <image class="playingImage" wx:if="{{playing}}" src='/static/images/playdetail/playing.png'></image>
+        <image wx:else src='/static/images/playdetail/pause.png'></image>
+      </view>
+    </view>
+    <view class="next">
+      <image src='/static/images/playdetail/pre.png' class="nextimg" bindtap='handleCutSong' data-type='next'></image>
+    </view>
+    <view class="list">
+      <image src='/static/images/playdetail/more.png'></image>
+    </view>
+  </view>
+</view>

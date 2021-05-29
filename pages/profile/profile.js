@@ -41,9 +41,18 @@ Page({
   },
   // 去登陆
   toLogin() {
-    wx.reLaunch({
-      url: "/pages/login/login"
-    })
+    if (wx.getStorageSync('userinfo')) {
+      wx.wx.showToast({
+        title: '你已经登录了哦',
+        icon: 'none',
+      });
+    }
+    else {
+      wx.reLaunch({
+        url: "/pages/login/login"
+      })
+    }
+
   },
   handleTouchStart(e) {
     this.setData({

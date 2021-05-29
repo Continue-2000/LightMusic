@@ -11,10 +11,15 @@ Page({
     recommendList: [],
     rankList: []
   },
-
+  // 前往每日推荐
+  toDayRecommend() {
+    wx.navigateTo({
+      url: '/pages/recommend/recommend'
+    })
+  },
   /**
-   * 生命周期函数--监听页面加载
-   */
+ * 生命周期函数--监听页面加载
+ */
   onLoad: async function (options) {
     let bannerList = await request('/banner', { type: 2 })
     let recommendList = await request('/personalized')
@@ -23,9 +28,11 @@ Page({
       recommendList: recommendList.result
     })
     let rankindex = 0;
+    let idindex = 24381616
     let arr = []
     while (rankindex < 5) {
-      let rankList = await request('/top/list', { idx: rankindex++ })
+      let rankList = await request('/playlist/detail', { id: idindex })
+      console.log(rankList);
       rankList = rankList.playlist;
       let musicItem = {
         id: rankList.id,
@@ -36,6 +43,7 @@ Page({
       this.setData({
         rankList: arr
       })
+      rankindex++
     }
   },
 

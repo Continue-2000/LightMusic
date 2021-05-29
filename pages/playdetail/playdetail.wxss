@@ -1,0 +1,156 @@
+/* pages/playdetail/playdetail.wxss */
+.palydetailContainer{
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+    flex-direction: column;
+  align-items: center;
+  background-image: "/static/images/header.jpg";
+  background: linear-gradient(#ADADAD,#DBD8D8);
+}
+.singer{
+  font-size: 25rpx;
+  color: #fff;
+}
+.midContent{
+  display: flex;
+  width: 100%;
+  height: 90%;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+.neddle{
+  position: relative;
+  display: block;
+  z-index: 10;
+  top: -100rpx;
+  left: 28rpx;
+  width: 290rpx;
+  transform: rotate(-20deg);
+  transform-origin: 120rpx 150rpx;
+  transition: 0.2s linear;
+}
+.Play{
+  transform: rotate(0deg);
+}
+@keyframes discRotate{
+  from{
+    transform: rotate(0);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+.discplay{
+  animation: discRotate 20s 0.2s linear infinite;
+}
+/* 暂停播放时动画 */
+.pause{
+        animation-play-state:paused;
+}
+.disc{
+  position: relative;
+  z-index: 2;
+  top: -292rpx;
+  width: 580rpx;
+  height: 580rpx;
+  border-radius: 50%;
+}
+.disc .discimage{
+width: 100%;
+height: 100%;
+}
+.songimage{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 360rpx;
+  height: 360rpx;
+  border-radius: 50%;
+}
+.buttomcontrol{
+  display: flex;
+  position: relative;
+  bottom: 30rpx;
+  width: 100%;
+  height: 150rpx;
+}
+.buttomcontrol>view{
+  position: relative;
+  flex: 1;
+}
+.box{
+   position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 100rpx;
+  height: 100rpx;
+  border: 4rpx solid #fff;
+  border-radius: 50%;
+}
+
+.buttomcontrol>view image{
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 45rpx;
+  height: 45rpx;
+}
+.buttomcontrol>view .playingImage{
+    width: 70rpx;
+  height: 70rpx;
+}
+.nextimg{
+  transform: rotate(180deg);
+}
+
+/* 进度条区域 */
+.progressBar{
+  position: absolute;
+  align-items: center;
+  padding: 0 10rpx;
+  bottom: 168rpx;
+  display: flex;
+  height: 60rpx;
+  width: 88%;
+  border-radius: 1px solid red;
+}
+.countTime{
+  color: #fff;
+  font-size: 20rpx;
+  
+}
+.lineBar{
+  position: relative;
+  width: 80%;
+  height: 4rpx;
+  background: rgba(255, 255, 255, .5);
+  margin: auto;
+}
+.curentTimeBar{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4rpx;
+  background: #eee;
+}
+.currentCircle{
+  position: absolute;
+  width: 12rpx;
+  height: 12rpx;
+  right: -12rpx;
+  bottom: -4rpx;
+  background: #fff;
+  border-radius: 50%;
+}

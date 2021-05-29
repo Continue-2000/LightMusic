@@ -6,7 +6,7 @@
   </swiper>
   <!-- 图标导航区域 -->
   <view class="navContent">
-    <view class="nav-item">
+    <view class="nav-item" bindtap='toDayRecommend'>
       <text class="iconfont icon-tuijian1"></text>
       <text class="title">每日推荐</text>
     </view>

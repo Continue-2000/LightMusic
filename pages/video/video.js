@@ -118,7 +118,11 @@ Page({
   },
   // 下拉加载更多
   handleLoadMore() {
-    this.LoadMore()
+    wx.showLoading({
+      title: '拼命加载中',
+    })
+    this.LoadMore();
+    wx.hideLoading()
   },
   async LoadMore() {
     console.log(1111);
