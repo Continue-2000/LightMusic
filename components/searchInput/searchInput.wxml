@@ -1,0 +1,5 @@
+<view class="header" bindtap='handleToSearch'>
+  <image src='/static/images/video/video.jpg' class="left"></image>
+  <view class="search">搜索</view>
+  <image src='/static/images/video/add.png' class="right"></image>
+</view>

@@ -1,0 +1,25 @@
+<scroll-view class="headerScroll" scroll-x enable-flex>
+  <view class="scrollItem" bindtap='titleClick' data-title='单曲'>
+    <text class="title {{clickTitle=='单曲'?'active':''}}">单曲</text>
+  </view>
+  <view class="scrollItem" bindtap='titleClick' data-title='歌单'>
+    <text class="title ">歌单</text>
+  </view>
+  <view class="scrollItem" bindtap='titleClick' data-title='视频'>
+    <text class="title ">视频</text>
+  </view>
+  <view class="scrollItem" bindtap='titleClick' data-title='歌手'>
+    <text class="title ">歌手</text>
+  </view>
+  <view class="scrollItem" bindtap='titleClick' data-title='播单'>
+    <text class="title ">播单</text>
+  </view>
+  <view class="scrollItem" bindtap='titleClick' data-title='歌词'>
+    <text class="title ">歌词</text>
+  </view>
+  <view class="scrollItem" bindtap='titleClick' data-title='专辑'>
+    <text class="title ">专辑</text>
+  </view>
+</scroll-view>
+<import src="/module/songList/songList.wxml"></import>
+<template is="songList" data="{{List,ListHeight}}" />

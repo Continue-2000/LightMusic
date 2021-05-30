@@ -1,3 +1,4 @@
+<SearchInput></SearchInput>
 <view class="index_container">
   <swiper class="banners" indicator-dots indicator-color='ivory' indicator-active-color='#d43c33' autoplay>
     <swiper-item wx:for='{{bannerList}}' wx:key='bannerId'>

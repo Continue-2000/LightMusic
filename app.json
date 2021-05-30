@@ -1,9 +1,11 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/recommend/recommend",
-    "pages/playdetail/playdetail",
+    "pages/search/search",
     "pages/video/video",
+    "pages/searchdetail/searchdetail",
+    "pages/recommend/recommend",
+    "pages/index/index",
+    "pages/playdetail/playdetail",
     "pages/profile/profile",
     "pages/login/login"
   ],

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "searchdetail": "/pages/searchdetail/searchdetail"
+  }
+}

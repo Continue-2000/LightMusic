@@ -1,5 +1,5 @@
 /* pages/video/video.wxss */
-.header{
+/* .header{
   margin-top: 10rpx;
   display: flex;
 }
@@ -15,7 +15,7 @@
 .header image{
   width: 65rpx;
   height: 65rpx;
-}
+} */
 
 /* 头部选择区域 */
 .topScroll{

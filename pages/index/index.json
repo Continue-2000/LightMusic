@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "NavHeader": "/components/navheader/NavHeader"
+    "NavHeader": "/components/navheader/NavHeader",
+    "SearchInput": "/components/searchInput/searchInput"
   }
 }

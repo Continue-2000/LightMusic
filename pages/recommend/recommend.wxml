@@ -6,26 +6,6 @@
     <view class="fortune">查看今日运势 ></view>
   </view>
 </view>
-<view class="recommendContainer">
-  <view class="header">
-    <text class="iconfont icon-bofang1"></text>
-    <text class="playall">播放全部</text>
-    <text class="iconfont  icon-duoxuan"></text>
-  </view>
-  <scroll-view class="recommendList" scroll-y>
-    <view class="recommendItem" wx:for='{{recommendList}}' wx:key="id" bindtap='handleToPlayDetail' data-song='{{item}}' data-index='{{index}}'>
-      <image src='{{item.al.picUrl}}' class="songimg" />
-      <view class="info">
-        <view class="songname">{{item.name}}</view>
-        <view class="singer">
-          <text wx:for='{{item.ar}}' wx:for-item="arItem" wx:key="id">{{arItem.name}}</text>
-          <text>{{item.al.name}}</text>
-        </view>
-      </view>
-      <view class="control">
-        <text class="iconfont  icon-shipin"></text>
-        <text class="iconfont  icon-dashujukeshihuaico-"></text>
-      </view>
-    </view>
-  </scroll-view>
-</view>
+<!-- songList模板 -->
+<import src="/module/songList/songList.wxml"></import>
+<template is="songList" data="{{List,ListHeight}}" />

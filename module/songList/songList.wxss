@@ -1,35 +1,4 @@
-/* pages/recommend/recommend.wxss */
-
-.backImage{
-  position: relative;
-  width: 100%;
-  height: 365rpx;
-}
-.backImage image{
-  width: 100%;
-  height: 100%;
-}
-.date{
-  position: absolute;
-  padding: 10rpx;
-  right: 32rpx;
-  bottom: 70rpx;
-  color: #fff;
-  background: rgba(0, 0, 0, .3);
-  text-align: center;
-}
-.day{
-  font-size: 70rpx;
-  font-weight: 700;
-}
-.month{
-  font-size: 30rpx;
-}
-.froturne{
-  font-size: 30rpx;
-}
-@import "/module/songList/songList.wxss"
-/* .recommendContainer{
+.recommendContainer{
   position: relative;
   top: -15rpx;
   left: 0;
@@ -61,7 +30,7 @@
   right: 10rpx;
 }
 .recommendList{
-  height: calc(100vh - 466rpx);
+ 
   margin-top: 40rpx;
 }
 .recommendItem{
@@ -106,4 +75,4 @@ border-radius: 10rpx;
 .singer{
   font-size: 25rpx;
   color: #ccc;
-} */
+}

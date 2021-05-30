@@ -4,6 +4,7 @@
   width: 100%;
 }
 .banners{
+  margin-top: 20rpx;
   height: 300rpx;
   width: 100%;
 }

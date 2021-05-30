@@ -32,7 +32,7 @@ Page({
     let arr = []
     while (rankindex < 5) {
       let rankList = await request('/playlist/detail', { id: idindex })
-      console.log(rankList);
+      // console.log(rankList);
       rankList = rankList.playlist;
       let musicItem = {
         id: rankList.id,

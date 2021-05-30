@@ -1,6 +1,5 @@
 // pages/playdetail/playdetail.js
 import request from "../../utils/request";
-import PubSub from 'pubsub-js'
 import moment from 'moment'
 var appInstance = getApp()
 Page({
@@ -10,6 +9,8 @@ Page({
   data: {
     playing: true,
     song: {},
+    index: 0,//正在播放的序号
+    playlist: [],//播放列表
     currentTime: '',//实时时间
     totalTime: '',//总时间
     processLength: 0//进度条长度
@@ -18,13 +19,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // appInstance.handleToPlay()
     // 接收歌曲数据
     const eventChannel = this.getOpenerEventChannel()
     let _this = this
     eventChannel.on('acceptDataFromOpenerPage', function (data) {
       console.log(data);
+      let playlist = data.data.list
+      let index = data.data.index
       _this.setData({
-        song: data.data.song
+        playlist,
+        song: playlist[index],
+        index
       })
     })
 
@@ -91,20 +97,24 @@ Page({
 
   // 切歌
   handleCutSong(e) {
-    // console.log('切歌' + e.currentTarget.dataset.type);
-    PubSub.publish('cutsongType', e.currentTarget.dataset.type)
-    PubSub.subscribe('cutsongInfo', (msg, song) => {
-      this.BackgroundAudioManager.stop()
-      console.log(song);
-      this.setData({
-        song: song
-      })
-      appInstance.globalData.playingId = song.id
-      this.getMusciUrl(song.id)
-      wx.setNavigationBarTitle({
-        title: this.data.song.name
-      })
-      PubSub.unsubscribe('cutsongInfo')
+    this.BackgroundAudioManager.stop()
+    let type = e.currentTarget.dataset.type;
+    let num = type == 'pre' ? -1 : 1
+    let { index, playlist, song } = this.data
+    let len = playlist.length
+    index = index + num;
+    if (index == -1)
+      index = len - 1
+    if (index == len)
+      index = 0;
+    song = playlist[index]
+    this.setData({
+      song,
+      index
+    })
+    this.getMusciUrl(song.id)
+    wx.setNavigationBarTitle({
+      title: song.name
     })
   },
 

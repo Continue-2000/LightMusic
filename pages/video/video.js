@@ -15,6 +15,12 @@ Page({
     isRefresher: false,
     loadindex: 0
   },
+  // 前往搜索
+  // handleToSearch() {
+  //   wx.navigateTo({
+  //     url: '/pages/search/search',
+  //   })
+  // },
   //点击获取对应Groupitem
   itemClick(e) {
     console.log(e);

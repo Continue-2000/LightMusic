@@ -1,6 +1,7 @@
 // pages/recommend/recommend.js
 import request from '../../utils/request'
-import PubSub from 'pubsub-js'
+import { handleToPlay } from '../../utils/function'
+
 
 Page({
   /**
@@ -9,7 +10,9 @@ Page({
   data: {
     scrollheight: '',
     recommendList: [],
-    index: 0
+    List: [],
+    ListHeight: 466,
+    index: 0,
   },
   // 滑动距离
   // onPageScroll: function (t) {
@@ -18,65 +21,32 @@ Page({
   // 跳转播放详情页
   handleToPlayDetail(e) {
     let index = e.currentTarget.dataset.index;
-
-    this.setData({
-      index
-    })
-    // console.log(e);
-    wx.navigateTo({
-      url: '/pages/playdetail/playdetail',
-      events: {
-        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-        acceptDataFromOpenedPage: function (data) {
-          console.log(data)
-        },
-      },
-      success: function (res) {
-        // 通过eventChannel向被打开页面传送数据
-        res.eventChannel.emit('acceptDataFromOpenerPage', { data: e.currentTarget.dataset })
-      }
-    })
+    // 全局跳转
+    handleToPlay(index, this.data.recommendList)
   },
   /**
  * 生命周期函数--监听页面加载
  */
   onLoad: function (options) {
     this.getRecommendList()
-    // 订阅切歌信息
-    PubSub.subscribe('cutsongType', (msg, type) => {
-      console.log(msg, type);
-      this.getCutSong(type)
-    })
   },
   //获得推荐列表
   async getRecommendList() {
     let res = await request('/recommend/songs')
-    console.log(res);
-    this.setData({
-      recommendList: res.data.dailySongs
-    })
-  },
-  //  发布切歌信息
-  getCutSong(type) {
-    let { recommendList, index } = this.data
-    let song = type == 'pre' ? recommendList[this.CutSongIndex(-1)] : recommendList[this.CutSongIndex(1)]
-    PubSub.publish('cutsongInfo', song)
-  },
-  // 切歌操作
-  CutSongIndex(num) {
-    let { index, recommendList } = this.data
-    let len = recommendList.length
-    index = index + num;
-    if (index == -1) {
-      index = len - 1
+    if (res.code == 200) {
+      // console.log(res);
+      this.setData({
+        recommendList: res.data.dailySongs,
+        List: res.data.dailySongs
+      })
     }
-    else if (index == len) {
-      index = 0;
+    else {
+      wx.showToast({
+        title: '请先登录哦',
+        icon: 'none',
+      });
+
     }
-    this.setData({
-      index
-    })
-    return index
   },
   /**
  * 生命周期函数--监听页面初次渲染完成
