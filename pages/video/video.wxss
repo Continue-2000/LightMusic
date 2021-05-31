@@ -1,21 +1,4 @@
-/* pages/video/video.wxss */
-/* .header{
-  margin-top: 10rpx;
-  display: flex;
-}
-.search{
- flex: 1;
- height: 65rpx;
- text-align: center;
- line-height: 65rpx;
- color: #ccc;
- border-radius: 30rpx;
- background: #eee;
-}
-.header image{
-  width: 65rpx;
-  height: 65rpx;
-} */
+
 
 /* 头部选择区域 */
 .topScroll{

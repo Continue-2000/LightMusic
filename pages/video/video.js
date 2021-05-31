@@ -1,4 +1,5 @@
 import request from '../../utils/request'
+import { handleToVideo } from "../../utils/function"
 // pages/video/video.js
 Page({
 
@@ -57,6 +58,7 @@ Page({
       })
       return
     }
+
     let data = res.datas.map(item => {
       item = item.data;
       return item
@@ -70,54 +72,36 @@ Page({
   videoClick(e) {
     console.log(e);
     let vid = e.currentTarget.id
-    // this.playingId != vid && this.videoContext && this.videoContext.stop()
-    this.videoContext = wx.createVideoContext(vid)
-    // this.playingId = vid;
-    // console.log(vid);
-    // this.playing && this.videoContext.pause()
-    // !this.playing && this.videoContext.play()
-    // this.playing = !this.playing
-    // console.log(this.playing);
-    let { timeUpdateData } = this.data
-    let isPlayedData = timeUpdateData.find(item => item.vid == e.currentTarget.id)
-    if (isPlayedData) {
-      console.log(isPlayedData.currentTime);
-      this.videoContext.seek(isPlayedData.currentTime)
-      this.setData({
-        initplace: isPlayedData.currentTime
-      })
-    }
-    this.setData({
-      playingId: vid
-    })
-    this.videoContext.play()
+    console.log(vid);
+    handleToVideo(vid, 'video')
+
   },
   // 检测视频播放了多久
-  handleTimeUpdate(e) {
-    // console.log(e);
-    let obj = { vid: e.currentTarget.id, currentTime: e.detail.currentTime }
-    let { timeUpdateData } = this.data
-    // 判断是否是播放过的
-    let isPlayedData = timeUpdateData.find(item => item.vid == e.currentTarget.id)
-    if (isPlayedData) {
-      isPlayedData.currentTime = e.detail.currentTime
-    }
-    else {
-      timeUpdateData.push(obj)
-    }
-    this.setData({
-      timeUpdateData
-    })
-  },
-  //播放后清除记录
-  handleEnded(e) {
-    // 移除记录播放时长数组中当前视频的对象
-    let { timeUpdateData } = this.data;
-    timeUpdateData.splice(timeUpdateData.findIndex(item => item.vid === e.currentTarget.id), 1);
-    this.setData({
-      timeUpdateData
-    })
-  },
+  // handleTimeUpdate(e) {
+  //   // console.log(e);
+  //   let obj = { vid: e.currentTarget.id, currentTime: e.detail.currentTime }
+  //   let { timeUpdateData } = this.data
+  //   // 判断是否是播放过的
+  //   let isPlayedData = timeUpdateData.find(item => item.vid == e.currentTarget.id)
+  //   if (isPlayedData) {
+  //     isPlayedData.currentTime = e.detail.currentTime
+  //   }
+  //   else {
+  //     timeUpdateData.push(obj)
+  //   }
+  //   this.setData({
+  //     timeUpdateData
+  //   })
+  // },
+  // //播放后清除记录
+  // handleEnded(e) {
+  //   // 移除记录播放时长数组中当前视频的对象
+  //   let { timeUpdateData } = this.data;
+  //   timeUpdateData.splice(timeUpdateData.findIndex(item => item.vid === e.currentTarget.id), 1);
+  //   this.setData({
+  //     timeUpdateData
+  //   })
+  // },
   //上拉刷新
   handleRefresher() {
     this.getVideoGroupData()

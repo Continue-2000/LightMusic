@@ -13,7 +13,8 @@ Page({
     playlist: [],//播放列表
     currentTime: '',//实时时间
     totalTime: '',//总时间
-    processLength: 0//进度条长度
+    processLength: 0,//进度条长度
+    isLyric: false //是否看歌词
   },
   /**
    * 生命周期函数--监听页面加载
@@ -29,15 +30,16 @@ Page({
       let index = data.data.index
       _this.setData({
         playlist,
-        song: playlist[index],
         index
       })
+
     })
 
     //如果没有歌或者在播放的不是同一首歌，则发送请求
     if (!appInstance.globalData.playing || appInstance.globalData.playingId != this.data.song.id) {
       //获取播放路径数据
-      this.getMusciUrl(this.data.song.id)
+      let { index, playlist } = this.data
+      this.getSongDetail(playlist[index].id)
     }
 
     //监听音乐播放状态
@@ -65,13 +67,12 @@ Page({
     });
 
   },
-  // 获取播放的音乐路径
-  async getMusciUrl(playId) {
-    let res = await request('/song/url', { id: playId })
-    let playurl = res.data[0].url;
-    console.log(res);
-    this.BackgroundAudioManager.src = playurl
-    this.BackgroundAudioManager.title = this.data.song.name
+  // 切换状态 磁盘/歌词
+  changeStatus() {
+    let { isLyric } = this.data
+    this.setData({
+      isLyric: !isLyric
+    })
   },
   //更新playing
   updatePlayStatus(status) {
@@ -80,21 +81,25 @@ Page({
     })
     appInstance.globalData.playing = status
   },
-  //点击播放的handle
+  // 更新数据 歌曲名 播放路径 歌词
+  UpdateDate(song) {
+    // 更新歌曲名
+    wx.setNavigationBarTitle({
+      title: song.name
+    })
+    // 更新歌词
+    this.getLyric(song.id)
+    // 更新播放路径
+    this.getMusciUrl(song.id)
+  },
+
+  // 底部操作栏
+
+  //播放/暂停
   handlePlay() {
     let isPlay = !this.data.playing
     this.handleisPlay(isPlay)
   },
-
-  // 播放音乐的操控函数
-  async handleisPlay(isPlay) {
-    if (isPlay)
-      this.BackgroundAudioManager.play()
-    else {
-      this.BackgroundAudioManager.pause()
-    }
-  },
-
   // 切歌
   handleCutSong(e) {
     this.BackgroundAudioManager.stop()
@@ -107,15 +112,56 @@ Page({
       index = len - 1
     if (index == len)
       index = 0;
-    song = playlist[index]
+    this.getSongDetail(playlist[index].id)
     this.setData({
-      song,
       index
     })
-    this.getMusciUrl(song.id)
-    wx.setNavigationBarTitle({
-      title: song.name
+    this.UpdateDate(song)
+  },
+  // 获取播放的音乐路径
+  async getMusciUrl(playId) {
+    let res = await request('/song/url', { id: playId })
+    let playurl = res.data[0].url;
+    console.log(res);
+    if (playurl) {
+      this.BackgroundAudioManager.src = playurl
+      this.BackgroundAudioManager.title = this.data.song.name
+    }
+    else {
+      wx.showToast({
+        title: '歌曲即将上线,敬请期待',
+        icon: 'none',
+        image: '',
+        duration: 2500,
+        mask: false,
+      });
+
+    }
+  },
+  // 获取歌曲详情
+  async getSongDetail(ids) {
+    let { song } = this.data
+    let res = await request('/song/detail', { ids })
+    console.log(res);
+    song = res.songs[0]
+    this.setData({
+      song
     })
+    // 更新数据
+    this.UpdateDate(song)
+  },
+  // 播放音乐的操控函数
+  async handleisPlay(isPlay) {
+    if (isPlay)
+      this.BackgroundAudioManager.play()
+    else {
+      this.BackgroundAudioManager.pause()
+    }
+  },
+  // 获取歌词
+  async getLyric(id) {
+    let res = await request('/lyric', { id })
+    console.log(res);
   },
 
   /**

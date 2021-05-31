@@ -1,5 +1,6 @@
 // pages/search/search.js
 import request from '../../utils/request.js'
+import { handleToSearchDetail } from "../../utils/function"
 let timer;
 Page({
 
@@ -76,19 +77,9 @@ Page({
     console.log(res);
   },
   // 点击搜索功能函数
-  handleSearchClick() {
-    wx.navigateTo({
-      url: 'String',
-      success: function (res) {
-        // success
-      },
-      fail: function () {
-        // fail
-      },
-      complete: function () {
-        // complete
-      }
-    })
+  handleSearchClick(e) {
+    let keywords = e.currentTarget.dataset.keywords;
+    handleToSearchDetail(keywords)
   },
   /**
    * 生命周期函数--监听页面加载

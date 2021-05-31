@@ -1,5 +1,7 @@
 // pages/searchdetail/searchdetail.js
 import request from '../../utils/request'
+import { handleToPlay, handleToVideo } from '../../utils/function'
+
 Page({
 
   /**
@@ -8,31 +10,62 @@ Page({
   data: {
     clickTitle: '单曲',
     List: [],
-    ListHeight: 140,
-    key: {
-      type: String
-    }
+    ListHeight: 230,
+    keywords: ''
   },
+  // 选择主题
   titleClick(e) {
     console.log(e.currentTarget.dataset.title);
     this.setData({
       clickTitle: e.currentTarget.dataset.title
     })
   },
+  // 前往播放音乐
+  handleToPlayDetail(e) {
+    let index = e.currentTarget.dataset.index;
+    // 全局跳转
+    handleToPlay(index, this.data.List)
+  },
+  // 前往播放mv
+  handleToPlayMv(e) {
+    let mvid = e.currentTarget.dataset.mv
+    handleToVideo(mvid, 'mv')
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getSearchData()
-    console.log(this.data.key);
+    let { keywords } = this.data
+    // 获取搜索点击关键字
+    const eventChannel = this.getOpenerEventChannel()
+    eventChannel.emit('acceptDataFromOpenedPage', { data: 'test' });
+    // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
+    eventChannel.on('acceptDataFromOpenerPage', function (data) {
+      keywords = data.data
+    })
+    this.setData({
+      keywords
+    })
+
+    // 获取搜索到的单曲列表 type:1
+    this.getSearchData(1)
+    // 获取mvid
+    this.getSearchData(1004)
   },
   // 根据搜索类型获得数据
-  async getSearchData() {
-    let res = await request('/search', { keywords: '海阔天空', type: 1 })
-    console.log(res);
-    this.setData({
-      List: res.result.songs
-    })
+  async getSearchData(typeNum) {
+    let { keywords } = this.data
+    if (typeNum == 1) {
+      let res = await request('/cloudsearch', { keywords, type: typeNum })
+      console.log(res);
+      this.setData({
+        List: res.result.songs
+      })
+    }
+    if (typeNum == 1004) {
+      let res = await request('/cloudsearch', { keywords, type: typeNum })
+      console.log(res);
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/search/search",
     "pages/video/video",
+    "pages/search/search",
     "pages/searchdetail/searchdetail",
+    "pages/videodetail/videodetail",
     "pages/recommend/recommend",
     "pages/index/index",
     "pages/playdetail/playdetail",

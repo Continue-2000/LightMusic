@@ -4,7 +4,7 @@
   </text>
   <view class="midContent">
     <image class='neddle {{playing &&"Play"}}' src='/static/images/playdetail/needle2.png' />
-    <view class="disc  {{playing &&'discplay'}}">
+    <view class="disc  {{playing &&'discplay'}}" bindtap='changeStatus'>
       <image class='discimage' src='/static/images/playdetail/disc.png' />
       <image class="songimage" src="{{song.al.picUrl}}" />
     </view>

@@ -14,8 +14,8 @@
 <!-- 视频滑动区域 -->
 <scroll-view class="videoScroll" scroll-y bindrefresherrefresh="handleRefresher" refresher-enabled refresher-triggered="{{isRefresher}}" bindscrolltolower="handleLoadMore">
   <view class="videoScrollItem" wx:for='{{videoGroupData}}' wx:key="threadId">
-    <video wx:if="{{item.vid==playingId}}" class="common" src="{{item.urlInfo.url}}" style="backgroundImage:'{{item.coverUrl}}'" bindplay='videoClick' id='{{item.vid}}' object-fit='fill' bindtimeupdate='handleTimeUpdate' bindended='handleEnded' initial-time='{{initplace}}' loop></video>
-    <image wx:else src="{{item.coverUrl}}" class="common" bindtap='videoClick' id='{{item.vid}}' />
+    <!-- <video wx:if="{{item.vid==playingId}}" class="common" src="{{item.urlInfo.url}}" style="backgroundImage:'{{item.coverUrl}}'" bindplay='videoClick' id='{{item.vid}}' object-fit='fill' bindtimeupdate='handleTimeUpdate' bindended='handleEnded' initial-time='{{initplace}}' loop></video> -->
+    <image src="{{item.coverUrl}}" class="common" bindtap='videoClick' id='{{item.vid}}' />
     <view class="title">{{item.title}}</view>
     <view class="avator">{{item.creator.nickname}}</view>
   </view>

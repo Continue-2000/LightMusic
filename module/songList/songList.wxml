@@ -5,19 +5,19 @@
       <text class="playall">播放全部</text>
       <text class="iconfont  icon-duoxuan"></text>
     </view>
-    <scroll-view class="recommendList" scroll-y style='height: calc(100vh - {{ListHeight+"rpx"}});'>
-      <view class="recommendItem" wx:for='{{List}}' wx:key="id" bindtap='handleToPlayDetail' data-song='{{item}}' data-index='{{index}}'>
+    <scroll-view class="recommendList" scroll-y style='height:calc(100vh - {{ListHeight+"rpx"}});'>
+      <view class="recommendItem" wx:for='{{List}}' wx:key="id" data-song='{{item}}'>
         <image wx:if="{{item.al.picUrl}}" src='{{item.al.picUrl}}' class="songimg" />
-        <view class="info">
+        <view class="info" bindtap='handleToPlayDetail' data-index='{{index}}'>
           <view class="songname">{{item.name}}</view>
-          <view class="singer">
+          <view class="singer" wx:if="{{item.ar}}">
             <text wx:for='{{item.ar}}' wx:for-item="arItem" wx:key="id">{{arItem.name}}</text>
             <text>{{item.al.name}}</text>
           </view>
         </view>
         <view class="control">
-          <text class="iconfont  icon-shipin"></text>
           <text class="iconfont  icon-dashujukeshihuaico-"></text>
+          <text wx:if="{{item.mv}}" class="iconfont  icon-shipin" bindtap='handleToPlayMv' data-mv='{{item.mv}}'></text>
         </view>
       </view>
     </scroll-view>

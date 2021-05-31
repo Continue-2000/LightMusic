@@ -66,6 +66,7 @@ transform: translateY(-50%);
 /* 搜索到的内容 */
 .searchContent{
   margin-top: 20rpx;
+  cursor: pointer;
 }
 .searchContentItem{
   position: relative;

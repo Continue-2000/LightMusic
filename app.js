@@ -3,7 +3,8 @@ App({
     playing: false,
     playingId: ''
   },
-
+  // 绝对路径
+  require: ($uri) => require($uri),
   /**
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */

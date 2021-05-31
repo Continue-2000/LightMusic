@@ -19,8 +19,6 @@
   opacity: 0.7;
   filter: blur(1px);
 }
-
-
 .user-info-box{
   height: 180rpx;
   display:flex;
@@ -29,7 +27,6 @@
   z-index: 1;
 
 }
-
 .user-info-box .portrait{
   width: 130rpx;
   height: 130rpx;

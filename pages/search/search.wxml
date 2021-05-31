@@ -26,7 +26,7 @@
         <view class="title">热搜榜</view>
       </view>
       <view class="hotsearch_body">
-        <view class="bodyItem" wx:for="{{hostSearchList}}" wx:key="searchWord">
+        <view class="bodyItem" wx:for="{{hostSearchList}}" wx:key="searchWord" bindtap='handleSearchClick' data-keywords='{{item.searchWord}}'>
           <text class="order">{{index+1}}</text>
           <text class="songName">{{item.searchWord}}</text>
           <image wx:if='{{item.iconUrl}}' src='{{item.iconUrl}}' />
@@ -42,7 +42,7 @@
   <!-- 搜索到的内容 -->
   <block wx:elif='{{!isSearched}}'>
     <view class="searchContent">
-      <view class="searchContentItem" wx:for="{{searchList}}" wx:key="id" bindtap='handleSearchClick'>
+      <view class="searchContentItem" wx:for="{{searchList}}" wx:key="id" bindtap='handleSearchClick' data-keywords='{{item.name}}'>
         <text class="iconfont   icon-sousuo searcheItemIcon"></text>
         <view class="box">
           <text class="songName">{{item.name}}</text>
@@ -50,7 +50,5 @@
       </view>
     </view>
   </block>
-  <block wx:else>
-    <searchdetail key='hello'></searchdetail>
-  </block>
+  <block wx:else></block>
 </view>
