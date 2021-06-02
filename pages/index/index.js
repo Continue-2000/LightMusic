@@ -1,6 +1,7 @@
 
 import request from '../../utils/request.js'
 // pages/index/index.js
+import { handleToPlay } from '../../utils/function'
 Page({
 
   /**

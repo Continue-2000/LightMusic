@@ -14,7 +14,8 @@ Page({
     hostSearchList: [],//存储10条热搜数据
     searchList: [],//搜索到的数据
     allList: [],//存储20条数据
-    isSearched: false
+    isSearched: false,
+    searchHistoryList: []
   },
   // 获取搜索关键字
   async getSearchKey() {
@@ -23,6 +24,46 @@ Page({
       searchKey: res.data.realkeyword
     })
     console.log(res);
+  },
+  // 本地获取搜索历史
+  getSearchHistoryList() {
+    let { searchHistoryList } = this.data;
+    searchHistoryList = wx.getStorageSync('searchHistoryList')
+    this.setData({
+      searchHistoryList
+    })
+  },
+  // 添加搜索记录到本地
+  addSearchHistory(keywords = '') {
+    let { searchHistoryList } = this.data;
+    let index = searchHistoryList.indexOf(keywords)
+    if (index != -1) {
+      searchHistoryList.splice(index, 1)
+    }
+    if (keywords)
+      searchHistoryList.unshift({ keywords })
+    wx.setStorageSync('searchHistoryList', searchHistoryList)
+  },
+  // 删除搜索记录
+  handleRemoveHistory() {
+    wx.showModal({
+      title: '确认删除吗？',
+      content: '',
+      showCancel: true,
+      cancelText: '取消',
+      cancelColor: '#000000',
+      confirmText: '确定',
+      confirmColor: '#3CC51F',
+      success: (result) => {
+        if (result.confirm) {
+          wx.setStorageSync('searchHistoryList', [])
+          // 更新记录
+          this.getSearchHistoryList()
+        }
+      },
+    });
+
+
   },
   // 删除搜索
   handleDeleteInput() {
@@ -66,7 +107,7 @@ Page({
       }
     }, 300)
   },
-  // 获取搜素列表
+  // 获取搜素到的列表
   async getSearchList(keywords) {
     let { searchList } = this.data
     let res = await request('/search', { keywords, limit: 10 })
@@ -79,14 +120,25 @@ Page({
   // 点击搜索功能函数
   handleSearchClick(e) {
     let keywords = e.currentTarget.dataset.keywords;
+    // 保存搜索记录到本地
+    this.addSearchHistory(keywords)
+    // 重新获取
+    this.getSearchHistoryList()
+    // 跳转至搜索详情
     handleToSearchDetail(keywords)
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 得到搜索关键词
     this.getSearchKey()
+    // 得到热搜列表
     this.getHotSearchList(10)
+
+    this.addSearchHistory()
+    // 得到本地搜索记录
+    this.getSearchHistoryList()
   },
 
   /**

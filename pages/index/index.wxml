@@ -30,7 +30,7 @@
   </view>
   <!-- 歌曲推荐模块 -->
   <view class="recommend">
-    <NavHeader title='推荐歌'></NavHeader>
+    <NavHeader title='推荐歌单'></NavHeader>
     <scroll-view class="recommend-content" enable-flex scroll-x>
       <view class="recommend-item" wx:for='{{recommendList}}' wx:key='id'>
         <view class="image">
@@ -48,7 +48,8 @@
         <view class="swiperItem">
           <view class='title'>{{item.titleName}}</view>
           <view class="songs">
-            <view class="song-item" wx:for='{{item.tracks}}' wx:for-item="songitem" wx:key="id" wx:for-index="songindex">
+            <view class="song-item" wx:for='{{item.tracks}}' wx:for-item="songitem" wx:key="id"
+              wx:for-index="songindex">
               <image src='{{songitem.al.picUrl}}'></image>
               <text class='count'>{{songindex+1}}</text>
               <text class='songname'>{{songitem.name}}</text>

@@ -1,4 +1,5 @@
 import request from '../../utils/request.js';
+var appInstance = getApp()
 
 // pages/login/login.js
 Page({
@@ -48,6 +49,7 @@ Page({
     if (code === 200) {
       let profile = JSON.stringify(res.profile)
       wx.setStorageSync('userinfo', profile)
+      appInstance.globalData.isLogin = true
       this.setData({
         isLogin: 'true'
       })

@@ -2,13 +2,21 @@
   <text class="singer">
     <text wx:for='{{song.ar}}' wx:key="id">{{item.name}}</text>
   </text>
-  <view class="midContent">
-    <image class='neddle {{playing &&"Play"}}' src='/static/images/playdetail/needle2.png' />
-    <view class="disc  {{playing &&'discplay'}}" bindtap='changeStatus'>
-      <image class='discimage' src='/static/images/playdetail/disc.png' />
-      <image class="songimage" src="{{song.al.picUrl}}" />
-    </view>
+  <view class="midContent" bindtap='changeStatus'>
+    <block wx:if="{{!isLyric}}">
+      <image class='neddle {{playing &&"Play"}}' src='/static/images/playdetail/needle2.png' />
+      <view class="disc  {{playing &&'discplay'}}">
+        <image class='discimage' src='/static/images/playdetail/disc.png' />
+        <image class="songimage" src="{{song.al.picUrl}}" />
+      </view>
+    </block>
+    <block wx:else>
+      <text>歌词区</text>
+    </block>
   </view>
+  <!-- 播放列表栏 -->
+  <import src="/module/songList/songList.wxml"></import>
+  <template wx:if="{{isLookSongList}}" is="songList" data="{{List,ListHeight}}" />
   <!-- 进度条区域 -->
   <view class="progressBar">
     <text class="countTime ">{{currentTime}}</text>
@@ -21,8 +29,10 @@
   </view>
   <!-- 底部控制区域 -->
   <view class="buttomcontrol">
-    <view class="order">
-      <image src='/static/images/playdetail/singerPlay.png'></image>
+    <view class="order" bindtap="changePlayType">
+      <image wx:if="{{playType=='singerPlay'}}" src='/static/images/playdetail/singerPlay.png'></image>
+      <image wx:if="{{playType=='listLoop'}}" src='/static/images/playdetail/listLoop.png'></image>
+      <image wx:if="{{playType=='randomPlay'}}" src='/static/images/playdetail/randomPlay.png'></image>
     </view>
     <view class="pre">
       <image src='/static/images/playdetail/pre.png' bindtap='handleCutSong' data-type='pre'></image>
@@ -36,7 +46,7 @@
     <view class="next">
       <image src='/static/images/playdetail/pre.png' class="nextimg" bindtap='handleCutSong' data-type='next'></image>
     </view>
-    <view class="list">
+    <view class="list" bindtap="handleLookSongList">
       <image src='/static/images/playdetail/more.png'></image>
     </view>
   </view>

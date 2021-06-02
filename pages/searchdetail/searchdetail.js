@@ -20,6 +20,10 @@ Page({
       clickTitle: e.currentTarget.dataset.title
     })
   },
+  // 播放所有
+  toPlayAll() {
+    handleToPlay(0, this.data.List)
+  },
   // 前往播放音乐
   handleToPlayDetail(e) {
     let index = e.currentTarget.dataset.index;

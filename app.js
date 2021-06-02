@@ -1,7 +1,7 @@
 App({
   globalData: {
     playing: false,
-    playingId: ''
+    playingId: '',
   },
   // 绝对路径
   require: ($uri) => require($uri),

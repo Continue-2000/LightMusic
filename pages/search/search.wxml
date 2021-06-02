@@ -2,7 +2,8 @@
   <!-- 搜索栏 -->
   <view class="searchHeader">
     <text class="iconfont  icon-sousuo "></text>
-    <input type="text" placeholder="{{searchKey}}" class="searchInput" value='{{inputValue}}' bindinput="handleInputChange" />
+    <input type="text" placeholder="{{searchKey}}" class="searchInput" value='{{inputValue}}'
+      bindinput="handleInputChange" />
     <text class="iconfont  icon-shanchu" hidden="{{!inputValue.length}}" bindtap='handleDeleteInput'></text>
   </view>
   <block></block>
@@ -12,23 +13,23 @@
     <view class="searchHistory">
       <text class="title">历史</text>
       <scroll-view class="historyScrollView" scroll-x enable-flex>
-        <view class="srollItem">
-          <view class="content">你好</view>
-        </view>
-        <view class="srollItem">
-          <view class="content">你好</view>
+        <view class="srollItem" wx:for="{{searchHistoryList}}" wx:key="keywords" bindtap='handleSearchClick'
+          data-keywords='{{item}}'>
+          <view class="content">{{item.keywords}}</view>
         </view>
       </scroll-view>
-      <text class="iconfont  icon-shanchu1"></text>
+      <text class="iconfont  icon-shanchu1" bindtap='handleRemoveHistory'></text>
     </view>
     <view class="hotsearch">
       <view class="hotsearch_header">
         <view class="title">热搜榜</view>
       </view>
       <view class="hotsearch_body">
-        <view class="bodyItem" wx:for="{{hostSearchList}}" wx:key="searchWord" bindtap='handleSearchClick' data-keywords='{{item.searchWord}}'>
+        <view class="bodyItem" wx:for="{{hostSearchList}}" wx:key="searchWord" bindtap='handleSearchClick'
+          data-keywords='{{item.searchWord}}'>
           <text class="order">{{index+1}}</text>
           <text class="songName">{{item.searchWord}}</text>
+
           <image wx:if='{{item.iconUrl}}' src='{{item.iconUrl}}' />
         </view>
       </view>
@@ -42,7 +43,8 @@
   <!-- 搜索到的内容 -->
   <block wx:elif='{{!isSearched}}'>
     <view class="searchContent">
-      <view class="searchContentItem" wx:for="{{searchList}}" wx:key="id" bindtap='handleSearchClick' data-keywords='{{item.name}}'>
+      <view class="searchContentItem" wx:for="{{searchList}}" wx:key="id" bindtap='handleSearchClick'
+        data-keywords='{{item.name}}'>
         <text class="iconfont   icon-sousuo searcheItemIcon"></text>
         <view class="box">
           <text class="songName">{{item.name}}</text>
@@ -51,4 +53,5 @@
     </view>
   </block>
   <block wx:else></block>
+
 </view>

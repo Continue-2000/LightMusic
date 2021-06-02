@@ -2,7 +2,7 @@
   <view class="recommendContainer">
     <view class="header">
       <text class="iconfont icon-bofang1"></text>
-      <text class="playall">播放全部</text>
+      <text class="playall" bindtap="toPlayAll">播放全部</text>
       <text class="iconfont  icon-duoxuan"></text>
     </view>
     <scroll-view class="recommendList" scroll-y style='height:calc(100vh - {{ListHeight+"rpx"}});'>

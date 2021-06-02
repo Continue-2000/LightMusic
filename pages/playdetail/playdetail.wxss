@@ -1,4 +1,5 @@
 /* pages/playdetail/playdetail.wxss */
+
 .palydetailContainer{
   display: flex;
   position: relative;
@@ -154,3 +155,14 @@ height: 100%;
   background: #fff;
   border-radius: 50%;
 }
+/* 展示播放页 */
+@import "/module/songList/songList.wxss";
+.recommendContainer{
+  position: absolute;
+  z-index: 20;
+  opacity: .95;
+  bottom: 20rpx;
+  left: 0;
+  height: 1010rpx;
+}
+

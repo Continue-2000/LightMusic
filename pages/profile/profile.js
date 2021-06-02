@@ -1,6 +1,6 @@
 
 import request from "../../utils/request";
-
+import { handleToPlay } from '../../utils/function'
 let startY = 0; // 手指起始的坐标
 let moveY = 0; // 手指移动的坐标
 let moveDistance = 0; // 手指移动的距离
@@ -13,20 +13,25 @@ Page({
     translateY: 'translateY(0)',
     transation: '',
     userInfo: {},
-    recentPlayList: []
+    recentPlayList: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (wx.getStorageSync('userinfo'))
+      this.init()
+  },
+  // 初始化
+  init() {
     this.setData({
       userInfo: JSON.parse(wx.getStorageSync('userinfo'))
     })
-    this.getRecentPlayed(this.data.userInfo.userId, 1)
-
+    this.getRecentPlayed()
   },
-  async getRecentPlayed(uid, type) {
+  // 获取最近播放
+  async getRecentPlayed(uid = this.data.userInfo.userId, type = 1) {
     let res = await request('/user/record', { uid, type })
     console.log(res);
     // 自己构造特殊标识
@@ -42,7 +47,7 @@ Page({
   // 去登陆
   toLogin() {
     if (wx.getStorageSync('userinfo')) {
-      wx.wx.showToast({
+      wx.showToast({
         title: '你已经登录了哦',
         icon: 'none',
       });
@@ -51,9 +56,21 @@ Page({
       wx.reLaunch({
         url: "/pages/login/login"
       })
+
     }
 
   },
+  // 播放历史
+  handleToRecentPlay(e) {
+    let { recentPlayList } = this.data
+    let arr = recentPlayList.map(item => {
+      item = item.song
+      return item
+    })
+    console.log(1);
+    handleToPlay(e.currentTarget.dataset.index, arr)
+  },
+  // 滑动
   handleTouchStart(e) {
     this.setData({
       transition: ''
@@ -87,7 +104,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (wx.getStorageSync('userinfo'))
+      this.getRecentPlayed()
   },
 
   /**

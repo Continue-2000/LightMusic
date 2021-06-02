@@ -11,10 +11,15 @@ Page({
     song: {},
     index: 0,//正在播放的序号
     playlist: [],//播放列表
+    List: [],//查看播放的列表
+    ListHeight: 466,//查看列表的高度
+    playType: 'listLoop',//播放类型
     currentTime: '',//实时时间
     totalTime: '',//总时间
     processLength: 0,//进度条长度
-    isLyric: false //是否看歌词
+    isLyric: false, //是否看歌词
+    isPlayEnd: false,//是否时自然播放
+    isLookSongList: false//是否查看播放列表
   },
   /**
    * 生命周期函数--监听页面加载
@@ -30,9 +35,9 @@ Page({
       let index = data.data.index
       _this.setData({
         playlist,
-        index
+        index,
+        List: playlist
       })
-
     })
 
     //如果没有歌或者在播放的不是同一首歌，则发送请求
@@ -54,6 +59,16 @@ Page({
     })
     this.BackgroundAudioManager.onStop(() => {
       this.updatePlayStatus(false)
+    })
+    this.BackgroundAudioManager.onEnded(() => {
+      //  自然播放完
+      this.setData({
+        isPlayEnd: true
+      })
+      this.handleCutSong()
+      this.setData({
+        isPlayEnd: false
+      })
     })
     // 监听实时更新
     this.BackgroundAudioManager.onTimeUpdate(() => {
@@ -81,6 +96,14 @@ Page({
     })
     appInstance.globalData.playing = status
   },
+  // 更新播放总时长
+  updateTotalTime() {
+    let totalTime = moment(this.data.song.dt).format('mm:ss')
+    // 更新时间条
+    this.setData({
+      totalTime
+    })
+  },
   // 更新数据 歌曲名 播放路径 歌词
   UpdateDate(song) {
     // 更新歌曲名
@@ -91,32 +114,106 @@ Page({
     this.getLyric(song.id)
     // 更新播放路径
     this.getMusciUrl(song.id)
+    // 更新播时间条
+    this.updateTotalTime()
   },
 
-  // 底部操作栏
+  // 底部操作栏-----
 
+  // 切换播放类型
+  changePlayType() {
+    let { playType } = this.data
+    let types = ['listLoop', 'singerPlay', 'randomPlay']
+    let index = types.indexOf(playType)
+    if (index == types.length - 1)
+      index = 0;
+    else
+      index++;
+    let type = '';
+    switch (index) {
+      case 0:
+        type = '列表循环'
+        break;
+      case 1:
+        type = '单曲循环'
+        break;
+      case 2:
+        type = '随机播放'
+    }
+    wx.showToast({
+      title: type,
+      icon: 'none',
+      duration: 1500,
+    });
+    this.setData({
+      playType: types[index]
+    })
+  },
   //播放/暂停
   handlePlay() {
     let isPlay = !this.data.playing
     this.handleisPlay(isPlay)
   },
-  // 切歌
-  handleCutSong(e) {
-    this.BackgroundAudioManager.stop()
-    let type = e.currentTarget.dataset.type;
-    let num = type == 'pre' ? -1 : 1
-    let { index, playlist, song } = this.data
-    let len = playlist.length
-    index = index + num;
-    if (index == -1)
-      index = len - 1
-    if (index == len)
-      index = 0;
-    this.getSongDetail(playlist[index].id)
+  //处理类型的功能函数
+  handlePlayTypeFunction(type) {
+    // type:上一首还是下一首
+    let { playType, index, playlist } = this.data
+    if (playType == 'listLoop') {
+      let num = type == 'pre' ? -1 : 1
+      let len = playlist.length
+      index = index + num;
+      if (index == -1)
+        index = len - 1
+      if (index == len)
+        index = 0;
+    }
+    else if (playType == 'singerPlay') {
+      index = index;
+
+    }
+    else if (playType == 'randomPlay') {
+      // 生成数组随机下标
+      index = Math.floor(Math.random() * (playlist.length - 0));
+    }
     this.setData({
       index
     })
-    this.UpdateDate(song)
+  },
+  // 切歌
+  handleCutSong(e) {
+    this.BackgroundAudioManager.stop()
+    // 获得是点击下一首还是上一首
+    let type = e.currentTarget.dataset.type;
+    if (this.data.isPlayEnd)
+      type = 'next'
+    // 获得切歌类型 列表\单曲\随机
+    this.handlePlayTypeFunction(type)
+    // 更新歌曲详细信息
+    let { playlist, index } = this.data
+    this.getSongDetail(playlist[index].id)
+  },
+  // 查看列表
+  handleLookSongList() {
+    let { isLookSongList } = this.data
+    isLookSongList = !isLookSongList
+    this.setData({
+      isLookSongList
+    })
+  },
+  // 播放所有
+  toPlayAll() {
+    handleToPlay(0, this.data.List)
+  },
+  // 点击查看的列表切歌
+  handleToPlayDetail(e) {
+    let { playlist, index, isLookSongList } = this.data
+    this.BackgroundAudioManager.stop()
+    index = e.currentTarget.dataset.index;
+    this.setData({
+      index,
+      isLookSongList: !isLookSongList
+    })
+    this.getSongDetail(playlist[index].id)
   },
   // 获取播放的音乐路径
   async getMusciUrl(playId) {
@@ -168,11 +265,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    let totalTime = moment(this.data.song.dt).format('mm:ss')
-    // 更新时间条
-    this.setData({
-      totalTime
-    })
+
   },
 
   /**

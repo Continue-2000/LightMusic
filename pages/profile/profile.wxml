@@ -3,7 +3,8 @@
     <image class="bg" src="/static/images/profile/bgImg2.jpg"></image>
     <view class="user-info-box" bindtap="toLogin">
       <view class="portrait-box">
-        <image class="portrait" src='{{userInfo.avatarUrl?userInfo.avatarUrl:"/static/images/profile/missing-face.png"}}'></image>
+        <image class="portrait"
+          src='{{userInfo.avatarUrl?userInfo.avatarUrl:"/static/images/profile/missing-face.png"}}'></image>
       </view>
       <view class="info-box">
         <text class="username">{{userInfo.nickname?userInfo.nickname: '游客'}}</text>
@@ -21,7 +22,9 @@
       <text class="e-b">开通会员听歌, 撸代码</text>
     </view>
   </view>
-  <view class="cover-container" bindtouchstart='handleTouchStart' bindtouchmove='handleMoveStart' bindtouchend='handleTouchEnd' style='transform:{{translateY}} ;  transition: {{transition}};'>
+
+  <view class="cover-container" bindtouchstart='handleTouchStart' bindtouchmove='handleMoveStart'
+    bindtouchend='handleTouchEnd' style="transform: {{coverTransform}}; transition: {{coveTransition}}">
     <image class="arc" src="/static/images/profile/arc.png"></image>
     <!-- 个人中心导航 -->
     <view class="nav-section">
@@ -48,7 +51,8 @@
         <text class="title">最近播放</text>
         <!-- 最近播放记录 -->
         <scroll-view wx:if="{{recentPlayList.length}}" class="scrollView" scroll-x enable-flex>
-          <view class="recentPlay" wx:for='{{recentPlayList}}' wx:key='playId'>
+          <view class="recentPlay" wx:for='{{recentPlayList}}' wx:key='playId' bindtap="handleToRecentPlay"
+            data-index='{{index}}'>
             <image src='{{item.song.al.picUrl}}' />
           </view>
         </scroll-view>
