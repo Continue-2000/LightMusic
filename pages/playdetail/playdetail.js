@@ -50,8 +50,10 @@ Page({
     //监听音乐播放状态
     this.BackgroundAudioManager = wx.getBackgroundAudioManager()
     this.BackgroundAudioManager.onPlay(() => {
+      let { song } = this.data
       this.updatePlayStatus(true)
-      appInstance.globalData.playingId = this.data.song.id
+      appInstance.globalData.playingId = song.id
+      aappInstance.globalData.playName = song.name
     })
     this.BackgroundAudioManager.onPause(() => {
       this.updatePlayStatus(false)

@@ -1,0 +1,14 @@
+<view class="playStatus">
+    <image class="songImage" src="/static/images/header.jpg"></image>
+    <text class="name">1231321</text>
+    <view class="controlItem playOrPause">
+        <view class="box">
+        <image wx:if="{{playing}}" src='/static/images/playStatus/play.png' />
+        <image wx:else src='/static/images/playStatus/pause.png' />
+        </view>
+
+    </view>
+    <view class="controlItem more">
+        <image src='/static/images/playStatus/more.png' />
+    </view>
+</view>

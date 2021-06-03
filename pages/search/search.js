@@ -24,6 +24,7 @@ Page({
       searchKey: res.data.realkeyword
     })
     console.log(res);
+    
   },
   // 本地获取搜索历史
   getSearchHistoryList() {

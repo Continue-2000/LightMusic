@@ -1,0 +1,109 @@
+.songsheetHeader{
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 400rpx;
+    background: rgb(204, 194, 143)
+}
+.songsheetImage{
+    width: 230rpx;
+    height: 230rpx;
+    margin-left: 40rpx;
+    border-radius: 20rpx;
+    overflow: hidden;
+    background: pink;
+}
+.songsheetImage image{
+    width: 100%;
+    height: 100%;
+}
+.rightinfo{
+position: relative;
+display: flex;
+margin-left: 40rpx;
+width: 400rpx;
+height: 230rpx;
+flex-direction: column;
+}
+.title{
+    width: 100%;
+    margin-bottom: 20rpx;
+    font-size: 28rpx;
+   
+     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+}
+.avator{
+    flex: 1;
+    display: flex;
+}
+.avator image{
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+}
+.avator text{
+    margin-left: 20rpx;
+    margin-top: 10rpx;
+    font-size: 26rpx;
+    color: #eee;
+}
+.introduce{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width:100%;
+     height: 80rpx;
+    font-size: 28rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #eee;
+}
+.arc{
+    position: absolute;
+    bottom: -10rpx;
+    width: 100%;
+    height: 36rpx;
+}
+.aboutCount{
+    position: absolute;
+    display: flex;
+    width: 70%;
+    height: 80rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -26rpx;
+    border-radius: 40rpx;
+    background: #fff;
+    box-shadow: 1rpx 1rpx 5rpx 1rpx rgba(0,0,0,.3) ;
+}
+.aboutCount .item{
+    box-sizing: border-box;
+    padding: 0 25rpx;
+    flex: 1;
+    display: flex;
+    text-align: center;
+}
+.aboutCount .item:nth-child(2){
+    border-left: 1rpx solid #ccc;
+    border-right: 1rpx solid #ccc;
+}
+.aboutCount .item text{
+    height: 100%;
+    line-height: 80rpx;
+}
+.aboutCount .item .count{
+    margin-left: 10rpx;
+    font-size: 26rpx;
+    
+}
+.aboutCount .item .iconfont{
+    font-size: 42rpx;
+}
+@import "/module/songList/songList.wxss";
+.recommendContainer {
+    top: 30rpx;
+}

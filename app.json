@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/songsheet/songsheet",
     "pages/profile/profile",
     "pages/recommend/recommend",
     "pages/searchdetail/searchdetail",
@@ -40,6 +41,9 @@
         "selectedIconPath": "/static/images/tabbar/profiled.png"
       }
     ]
+  },
+  "usingComponents": {
+    "playStatus": "/components/playStatus/playStatus"
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

@@ -32,7 +32,7 @@
   <view class="recommend">
     <NavHeader title='推荐歌单'></NavHeader>
     <scroll-view class="recommend-content" enable-flex scroll-x>
-      <view class="recommend-item" wx:for='{{recommendList}}' wx:key='id'>
+      <view class="recommend-item" wx:for='{{recommendList}}' wx:key='id' bindtap='handleToDetail' data-id='{{item.id}}'>
         <view class="image">
           <image src='{{item.picUrl}}'></image>
         </view>
@@ -45,11 +45,11 @@
     <NavHeader title='排行榜'></NavHeader>
     <swiper class='ranking-content' circular next-margin="60rpx">
       <swiper-item class="ranking-item" wx:for='{{rankList}}' wx:key='id'>
-        <view class="swiperItem">
+        <view class="swiperItem" wx:if="{{item.tracks.length}}" >
           <view class='title'>{{item.titleName}}</view>
           <view class="songs">
             <view class="song-item" wx:for='{{item.tracks}}' wx:for-item="songitem" wx:key="id"
-              wx:for-index="songindex">
+              wx:for-index="songindex" bindtap='handleToPlayRank' data-index='{{index*3+songindex}}'>
               <image src='{{songitem.al.picUrl}}'></image>
               <text class='count'>{{songindex+1}}</text>
               <text class='songname'>{{songitem.name}}</text>
@@ -59,4 +59,5 @@
       </swiper-item>
     </swiper>
   </view>
+  <playStatus></playStatus>
 </view>

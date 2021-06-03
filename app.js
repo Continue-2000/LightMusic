@@ -1,7 +1,8 @@
 App({
   globalData: {
-    playing: false,
-    playingId: '',
+    playing: false,//是否再播放
+    playingId: '',//在播放的ID
+    playName: ''//在播放的歌曲名
   },
   // 绝对路径
   require: ($uri) => require($uri),

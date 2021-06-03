@@ -1,4 +1,4 @@
-// components/Indexscroll-x/IndexScroll-x.js
+// components/playStatus/playStatus.js
 Component({
   /**
    * 组件的属性列表

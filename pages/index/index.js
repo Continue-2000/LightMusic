@@ -1,7 +1,7 @@
 
 import request from '../../utils/request.js'
 // pages/index/index.js
-import { handleToPlay } from '../../utils/function'
+import { handleToPlay, handleToSongSheetDetail } from '../../utils/function'
 Page({
 
   /**
@@ -10,13 +10,22 @@ Page({
   data: {
     bannerList: [],
     recommendList: [],
-    rankList: []
+    rankList: [],
+    rankAllList: []
   },
   // 前往每日推荐
   toDayRecommend() {
     wx.navigateTo({
       url: '/pages/recommend/recommend'
     })
+  },
+  // 前往推荐歌单
+  handleToDetail(e) {
+    handleToSongSheetDetail(e.currentTarget.dataset.id)
+  },
+  // 前往播放排行榜
+  handleToPlayRank(e) {
+    handleToPlay(e.currentTarget.dataset.index, this.data.rankAllList)
   },
   /**
  * 生命周期函数--监听页面加载
@@ -31,21 +40,27 @@ Page({
     let rankindex = 0;
     let idindex = 24381616
     let arr = []
+    let rankList = await request('/playlist/detail', { id: idindex })
+    // 播放列表总长度
+    let len;
+    len = wx.getStorageSync('userinfo') ? 20 : 6
+    rankList = rankList.playlist;
+    this.setData({
+      rankAllList: rankList.tracks.slice(0, len)
+    })
     while (rankindex < 5) {
-      let rankList = await request('/playlist/detail', { id: idindex })
-      // console.log(rankList);
-      rankList = rankList.playlist;
       let musicItem = {
         id: rankList.id,
         titleName: rankList.name,
-        tracks: rankList.tracks.slice(0, 3)
+        tracks: rankList.tracks.slice(rankindex * 3, (rankindex * 3 + 3))
       };
       arr.push(musicItem)
-      this.setData({
-        rankList: arr
-      })
       rankindex++
     }
+    console.log(arr);
+    this.setData({
+      rankList: arr
+    })
   },
 
   /**

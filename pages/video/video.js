@@ -120,7 +120,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (!wx.getStorageSync('userinfo')) {
+      wx.showToast({
+        title: '请先登录了解更多哦！',
+        icon: 'none',
+        duration: 2000
+      })
+    }
   },
 
   /**

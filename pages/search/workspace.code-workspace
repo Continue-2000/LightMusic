@@ -1,7 +1,15 @@
 {
   "folders": [
     {
-      "path": "..\\.."
+      "path": "..\\..\\..\\..\\LeetCode刷题\\LeetCode"
     }
-  ]
+  ],
+  "settings": {
+    "files.associations": {
+      "*.cjson": "jsonc",
+      "*.wxss": "css",
+      "*.wxs": "javascript",
+      "*.wxml": "html"
+    }
+  }
 }
