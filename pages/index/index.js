@@ -1,6 +1,7 @@
 
 import request from '../../utils/request.js'
 // pages/index/index.js
+const appInstance = getApp()
 import { handleToPlay, handleToSongSheetDetail } from '../../utils/function'
 Page({
 
@@ -11,7 +12,15 @@ Page({
     bannerList: [],
     recommendList: [],
     rankList: [],
-    rankAllList: []
+    rankAllList: [],
+
+    isShow: false,//是否展示底部播放
+    playing: false,
+    playSong: {},
+    playList: [],
+    playIndex: 0,
+    backgroundAudioManager: {},
+
   },
   // 前往每日推荐
   toDayRecommend() {
@@ -74,7 +83,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (appInstance.globalData.playing) {
+      this.setData({
+        playing: appInstance.globalData.playing,
+        playSong: appInstance.globalData.playSong,
+        playList: appInstance.globalData.playList,
+        playIndex: appInstance.globalData.playIndex,
+        backgroundAudioManager: appInstance.globalData.backgroundAudioManager,
+        isShow: true
+      })
+    }
   },
 
   /**
@@ -108,7 +126,11 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function ({ from }) {
+    return {
+      title: '来自大帅的转发',
+      page: '/pages/video/video',
+      imageUrl: '/static/images/1.jpg'
+    }
   }
 })

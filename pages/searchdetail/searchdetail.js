@@ -39,32 +39,40 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let { keywords } = this.data
+    // let { keywords } = this.data
+    let _this = this
     // 获取搜索点击关键字
     const eventChannel = this.getOpenerEventChannel()
-    eventChannel.emit('acceptDataFromOpenedPage', { data: 'test' });
     // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
     eventChannel.on('acceptDataFromOpenerPage', function (data) {
-      keywords = data.data
-    })
-    this.setData({
-      keywords
-    })
+      _this.setData({
+        keywords: data.data
+      })
+      // console.log(res);
+      // 获取搜索到的单曲列表 type:1
+      _this.getSearchData(1)
+      // 获取mvid
+      _this.getSearchData(1004)
 
-    // 获取搜索到的单曲列表 type:1
-    this.getSearchData(1)
-    // 获取mvid
-    this.getSearchData(1004)
+    })
+    // this.setData({
+    //   keywords: res
+    // })
+
+
   },
   // 根据搜索类型获得数据
   async getSearchData(typeNum) {
-    let { keywords } = this.data
+    let { keywords, List } = this.data
     if (typeNum == 1) {
+      console.log(keywords, typeNum);
       let res = await request('/cloudsearch', { keywords, type: typeNum })
       console.log(res);
+
       this.setData({
         List: res.result.songs
       })
+
     }
     if (typeNum == 1004) {
       let res = await request('/cloudsearch', { keywords, type: typeNum })

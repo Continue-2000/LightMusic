@@ -1,5 +1,6 @@
 /* components/searchInput/searchInput.wxss */
 .header{
+  height: 80rpx;
   margin-top: 10rpx;
   display: flex;
   justify-content:space-around;
@@ -7,7 +8,6 @@
 }
 .search{
  width: 80%;
- 
  height: 65rpx;
  text-align: center;
  line-height: 65rpx;

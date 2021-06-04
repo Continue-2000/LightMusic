@@ -24,7 +24,7 @@ Page({
       searchKey: res.data.realkeyword
     })
     console.log(res);
-    
+
   },
   // 本地获取搜索历史
   getSearchHistoryList() {
@@ -42,7 +42,7 @@ Page({
       searchHistoryList.splice(index, 1)
     }
     if (keywords)
-      searchHistoryList.unshift({ keywords })
+      searchHistoryList.unshift(keywords)
     wx.setStorageSync('searchHistoryList', searchHistoryList)
   },
   // 删除搜索记录

@@ -14,6 +14,11 @@
   height: 480rpx;
 
 }
+.moveVideo{
+  position:absolute;
+  left: 0;
+  top: 0;
+}
 video{
     display: block;
   width: 100%;
@@ -66,14 +71,18 @@ video{
 
 }
 .control{
+  position: fixed;
   display: flex;
+  right: 0;
+  bottom: 26rpx;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 120rpx;
+  height: 500rpx;
 }
 .control-item{
-  margin-top: 10rpx;
+  margin-top: 20rpx;
   flex: 1;
   font-size: 25rpx;
   color: #fff;

@@ -1,5 +1,14 @@
 /* pages/index/index.wxss */
+.searchInput{
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #fff;
+}
 .index_container{
+  margin-top: 80rpx;
   height: 100%;
   width: 100%;
 }
@@ -10,11 +19,14 @@
 }
 
 .swiper-item{
-  width: 100%
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
 }
 
-.swiper-item image{
-  width: 100%;
+.banners .bannerImage{
+  width: 100% ;
   height: 100%;
 }
 

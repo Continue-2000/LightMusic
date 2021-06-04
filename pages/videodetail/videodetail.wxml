@@ -2,8 +2,8 @@
   <!-- 弹幕滚动区域 -->
   <view class="bulletChat">弹幕区</view>
   <!-- 视频播放区域 -->
-  <view class="video">
-    <video enable-danmu autoplay object-fit='fill' src='{{playUrl}}' id="myVideo" bindtap='videoClick'></video>
+  <view class="video {{isLookComment?'moveVideo':''}}" >
+    <video loop enable-danmu autoplay object-fit='fill' src='{{playUrl}}' id="myVideo" bindtap='videoClick'></video>
   </view>
   <!-- 信息区 -->
   <view class="info">
@@ -27,7 +27,7 @@
         <view class="iconfont  icon-dianzan"></view>
         <text>{{playInfo.subCount||playInfo.praisedCount}}</text>
       </view>
-      <view class="control-item">
+      <view class="control-item" bindtap='handleLookComment'>
         <view class="iconfont    icon-pinglun"></view>
         <text>{{playInfo.commentCount}}</text>
       </view>
@@ -41,4 +41,5 @@
       </view>
     </view>
   </view>
+
 </view>

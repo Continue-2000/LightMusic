@@ -45,7 +45,7 @@
   }
 }
 .discplay{
-  animation: discRotate 20s 0.2s linear infinite;
+  animation: discRotate 40s 0.2s linear infinite;
 }
 /* 暂停播放时动画 */
 .pause{
@@ -156,7 +156,7 @@ height: 100%;
   border-radius: 50%;
 }
 /* 展示播放页 */
-@import "/module/songList/songList.wxss";
+@import "/template/songList/songList.wxss";
 .recommendContainer{
   position: absolute;
   z-index: 20;

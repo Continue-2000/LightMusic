@@ -15,7 +15,7 @@
       <scroll-view class="historyScrollView" scroll-x enable-flex>
         <view class="srollItem" wx:for="{{searchHistoryList}}" wx:key="keywords" bindtap='handleSearchClick'
           data-keywords='{{item}}'>
-          <view class="content">{{item.keywords}}</view>
+          <view class="content">{{item}}</view>
         </view>
       </scroll-view>
       <text class="iconfont  icon-shanchu1" bindtap='handleRemoveHistory'></text>

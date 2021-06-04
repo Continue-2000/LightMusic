@@ -1,14 +1,17 @@
-<view class="playStatus">
-    <image class="songImage" src="/static/images/header.jpg"></image>
-    <text class="name">1231321</text>
+  <!-- 播放列表栏 -->
+  <import src="/template/songList/songList.wxml"></import>
+  <template wx:if="{{isLookSongList}}" is="songList" data="{{List,ListHeight}}" />
+<view class="playStatus" wx:if="{{isShow}}">
+    <image class="songImage" src="{{playSong.al.picUrl}}"></image>
+    <view class="name" bindtap="handlePlay">{{playSong.name}}-<text wx:for="{{playSong.ar}}" wx:key="id" class="avatorName">{{item.name}}</text></view>
     <view class="controlItem playOrPause">
-        <view class="box">
-        <image wx:if="{{playing}}" src='/static/images/playStatus/play.png' />
+        <view class="box" bindtap='handlePlayStatus'>
+        <image wx:if="{{!playing}}" src='/static/images/playStatus/play.png' />
         <image wx:else src='/static/images/playStatus/pause.png' />
         </view>
 
     </view>
-    <view class="controlItem more">
+    <view class="controlItem more" bindtap="handleLookSongList">
         <image src='/static/images/playStatus/more.png' />
     </view>
 </view>

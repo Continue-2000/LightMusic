@@ -1,8 +1,0 @@
-.playStatus{
-    position: absolute;
-    width: 100%;
-    height: 120rpx;
-    left: 0;
-    bottom: 0;
-    background: pink;
-}

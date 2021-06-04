@@ -28,4 +28,4 @@
 .froturne{
   font-size: 30rpx;
 }
-@import "/module/songList/songList.wxss"
+@import "/template/songList/songList.wxss"

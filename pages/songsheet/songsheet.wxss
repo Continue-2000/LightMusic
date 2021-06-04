@@ -11,7 +11,6 @@
     margin-left: 40rpx;
     border-radius: 20rpx;
     overflow: hidden;
-    background: pink;
 }
 .songsheetImage image{
     width: 100%;
@@ -103,7 +102,7 @@ flex-direction: column;
 .aboutCount .item .iconfont{
     font-size: 42rpx;
 }
-@import "/module/songList/songList.wxss";
+@import "/template/songList/songList.wxss";
 .recommendContainer {
     top: 30rpx;
 }

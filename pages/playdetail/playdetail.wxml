@@ -15,7 +15,7 @@
     </block>
   </view>
   <!-- 播放列表栏 -->
-  <import src="/module/songList/songList.wxml"></import>
+  <import src="/template/songList/songList.wxml"></import>
   <template wx:if="{{isLookSongList}}" is="songList" data="{{List,ListHeight}}" />
   <!-- 进度条区域 -->
   <view class="progressBar">

@@ -19,6 +19,7 @@ Page({
     moveDistanceY: 0,
     translateY: 'translateY(0)',
     transation: '',
+    isLookComment: false//是否看评论
   },
 
   /**
@@ -36,12 +37,12 @@ Page({
         playId,
         type
       })
+      _this.getPlayUrl(playId, type)
     })
     this.videocontext = wx.createVideoContext('myVideo', this)
 
     // 获取播放地址
-    let { playId, type } = this.data
-    this.getPlayUrl(playId, type)
+
   },
   // 暂停继续播放
   videoClick() {
@@ -58,6 +59,7 @@ Page({
   // 获取播放地址
   async getPlayUrl(id, type) {
     let { playList } = this.data
+    console.log(type);
     let url = type == 'mv' ? '/mv/url' : '/video/url'
     console.log(url);
     let res = await request(url, { id })
@@ -94,6 +96,19 @@ Page({
     let { startY, moveY, moveDistanceY } = this.data
     moveY = e.touches[0].clientY;
     moveDistanceY = moveY - startY;
+    this.setData({
+      moveDistanceY
+    })
+    // this.setData({
+    //   translateY: `translateY(${moveDistanceY}rpx)`
+    // })
+  },
+  handleTouchEnd() {
+    // this.setData({
+    //   transition: '1s linear',
+    //   translateY: `translateY(0rpx)`
+    // })
+    let { moveDistanceY } = this.data
     if (moveDistanceY > 80) {
       console.log('上滑');
       this.changePlay(-1)
@@ -103,24 +118,27 @@ Page({
       this.changePlay(1)
     }
     this.setData({
-      translateY: `translateY(${moveDistanceY}rpx)`
+      moveDistanceY: 0
     })
-  },
-  handleTouchEnd() {
-    this.setData({
-      transition: '1s linear',
-      translateY: `translateY(0rpx)`
-    })
-
   },
   // 滑动视频的功能函数
   changePlay(num) {
+
     let { playIndex, playList, offset } = this.data;
     playIndex = playIndex + num;
     if (playIndex == -1) {
+      wx.showLoading({
+        title: '到顶了哦,往下滑试试吧！',
+      })
+      setTimeout(() => {
+        wx.hideLoading()
+      }, 2000)
       return
     }
     else {
+      wx.showLoading({
+        title: '加载中',
+      })
       if (playIndex === playList.length) {
         this.getOtherList(offset)
       }
@@ -128,8 +146,8 @@ Page({
         playIndex,
         playUrl: playList[playIndex]
       })
-
     }
+    wx.hideLoading()
   },
   // 获取其他视频
   async getOtherList(offset) {
@@ -138,6 +156,14 @@ Page({
       this.getPlayUrl(item.data.vid, 'video')
     })
   },
+
+  // 右侧控制栏
+  handleLookComment() {
+    this.setData({
+      isLookComment: !this.data.isLookComment
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

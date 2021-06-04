@@ -16,4 +16,4 @@
 .active{
     border-bottom: 1px solid red;
 }
-@import "/module/songList/songList.wxss"
+@import "/template/songList/songList.wxss"

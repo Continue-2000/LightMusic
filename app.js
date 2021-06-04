@@ -2,7 +2,10 @@ App({
   globalData: {
     playing: false,//是否再播放
     playingId: '',//在播放的ID
-    playName: ''//在播放的歌曲名
+    playSong: '',//在播放的歌曲
+    playList: [],//正在播放的列表
+    playIndex: 0,//正在播放的序号
+    backgroundAudioManager: {},//背景音乐实例对象
   },
   // 绝对路径
   require: ($uri) => require($uri),

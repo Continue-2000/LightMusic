@@ -7,5 +7,5 @@
   </view>
 </view>
 <!-- songList模板 -->
-<import src="/module/songList/songList.wxml"></import>
+<import src="/template/songList/songList.wxml"></import>
 <template is="songList" data="{{List,ListHeight}}" />

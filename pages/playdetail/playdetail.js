@@ -7,8 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    playing: true,
+    handlePlay: true,
     song: {},
+    playing: true,
     index: 0,//正在播放的序号
     playlist: [],//播放列表
     List: [],//查看播放的列表
@@ -36,24 +37,25 @@ Page({
       _this.setData({
         playlist,
         index,
-        List: playlist
+        List: playlist,
+        song: playlist[index]
       })
+      _this.handleIsTheSimpleSong()
     })
 
-    //如果没有歌或者在播放的不是同一首歌，则发送请求
-    if (!appInstance.globalData.playing || appInstance.globalData.playingId != this.data.song.id) {
-      //获取播放路径数据
-      let { index, playlist } = this.data
-      this.getSongDetail(playlist[index].id)
-    }
+
 
     //监听音乐播放状态
     this.BackgroundAudioManager = wx.getBackgroundAudioManager()
     this.BackgroundAudioManager.onPlay(() => {
-      let { song } = this.data
+      let { song, playlist, index } = this.data
       this.updatePlayStatus(true)
+      console.log(2222222);
       appInstance.globalData.playingId = song.id
-      aappInstance.globalData.playName = song.name
+      appInstance.globalData.playSong = song
+      appInstance.globalData.playList = playlist
+      appInstance.globalData.playIndex = index
+      appInstance.globalData.backgroundAudioManager = this.BackgroundAudioManager
     })
     this.BackgroundAudioManager.onPause(() => {
       this.updatePlayStatus(false)
@@ -83,6 +85,17 @@ Page({
       })
     });
 
+  },
+  // 判断是否是同首歌曲播放
+  handleIsTheSimpleSong() {
+    //如果没有歌或者在播放的不是同一首歌，则发送请求
+    if (!appInstance.globalData.playing || appInstance.globalData.playingId != this.data.song.id) {
+      //获取播放路径数据
+      let { index, playlist } = this.data
+      console.log(appInstance.globalData.playingId, this.data.id);
+      console.log(1111111);
+      this.getSongDetail(playlist[index].id)
+    }
   },
   // 切换状态 磁盘/歌词
   changeStatus() {
@@ -115,7 +128,7 @@ Page({
     // 更新歌词
     this.getLyric(song.id)
     // 更新播放路径
-    this.getMusciUrl(song.id)
+    this.getMusicUrl(song.id)
     // 更新播时间条
     this.updateTotalTime()
   },
@@ -218,7 +231,7 @@ Page({
     this.getSongDetail(playlist[index].id)
   },
   // 获取播放的音乐路径
-  async getMusciUrl(playId) {
+  async getMusicUrl(playId) {
     let res = await request('/song/url', { id: playId })
     let playurl = res.data[0].url;
     console.log(res);
