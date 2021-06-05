@@ -7,8 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    videoGroupList: [],
-    currentId: '',
+    // scrollTags板块
+    TagsList: [],
+    clickTgeId: 0,
     videoGroupData: [],
     playingId: 0,
     timeUpdateData: [],
@@ -23,10 +24,9 @@ Page({
   //   })
   // },
   //点击获取对应Groupitem
-  itemClick(e) {
-    console.log(e);
+  TagClick(e) {
     this.setData({
-      currentId: e.currentTarget.dataset.id
+      clickTgeId: e.currentTarget.dataset.tag
     })
     this.getVideoGroupData()
   },
@@ -35,8 +35,8 @@ Page({
   async getVideoGroupList() {
     let res = await request('/video/group/list')
     this.setData({
-      videoGroupList: res.data.slice(0, 14),
-      currentId: res.data.splice(0, 1)[0].id
+      TagsList: res.data.slice(0, 14),
+      clickTgeId: res.data[0].id
     })
     this.getVideoGroupData()
   },
@@ -48,7 +48,7 @@ Page({
     this.setData({
       videoGroupData: []
     })
-    let res = await request('/video/group', { id: this.data.currentId })
+    let res = await request('/video/group', { id: this.data.clickTgeId })
     wx.hideLoading()
     if (res.code != 200) {
       wx.showToast({

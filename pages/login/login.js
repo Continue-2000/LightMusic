@@ -27,6 +27,7 @@ Page({
       })
       return
     }
+    // 前端简单验证手机号格式
     let phoneRegExp = new RegExp(/^1(3|4|5|6|7|8|9)\d{9}$/);
     if (!phoneRegExp.test(phone)) {
       wx.showToast({
@@ -49,6 +50,7 @@ Page({
     if (code === 200) {
       let profile = JSON.stringify(res.profile)
       wx.setStorageSync('userinfo', profile)
+
       appInstance.globalData.isLogin = true
       this.setData({
         isLogin: 'true'

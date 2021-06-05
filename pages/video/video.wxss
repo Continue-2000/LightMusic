@@ -1,7 +1,7 @@
 
 
 /* 头部选择区域 */
-.topScroll{
+/* .topScroll{
   padding-top: 20rpx;
   display: flex;
   white-space: nowrap;
@@ -15,9 +15,11 @@
 }
 .active{
   border-bottom: 1rpx solid red;
-}
+} */
+@import "/template/scrollTags/scrollTags.wxss";
 
 /* 视频数据区域 */
+
 .videoScroll{
   margin-top: 10rpx;
   height: calc(100vh - 158rpx);

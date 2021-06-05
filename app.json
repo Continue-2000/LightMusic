@@ -1,13 +1,14 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/songsheet/songsheet",
+    "pages/video/video",
+    "pages/index/index",
+    "pages/songsheetdetail/songsheetdetail",
     "pages/profile/profile",
     "pages/recommend/recommend",
     "pages/searchdetail/searchdetail",
     "pages/playdetail/playdetail",
     "pages/search/search",
-    "pages/video/video",
     "pages/videodetail/videodetail",
     "pages/login/login"
   ],

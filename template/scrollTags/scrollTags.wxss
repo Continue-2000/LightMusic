@@ -1,0 +1,23 @@
+.headerScroll{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  white-space: nowrap;
+  height: 80rpx;
+  background: #fff;
+  z-index: 10;
+}
+.scrollItem{
+  margin-right: 30rpx;
+  padding: 20rpx;
+}
+.scrollItem .title{
+  font-size: 28rpx;
+  color: #aaa;
+
+}
+.active{
+    border-bottom: 1px solid red;
+}

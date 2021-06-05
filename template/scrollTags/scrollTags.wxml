@@ -1,0 +1,11 @@
+
+<template name="scrollTags">
+<view>
+<scroll-view class="headerScroll" scroll-x enable-flex scroll-into-view='{{"scroll"+clickTgeId}}' scroll-with-animation>
+  <view class="scrollItem" bindtap='TagClick' wx:for="{{TagsList}}" wx:key="id" data-tag='{{item.id}}' data-index='{{index}}'  id="{{'scroll'+item.id}}">
+    <text class="title {{clickTgeId==item.id?'active':''}}">{{item.name}}</text>
+  </view>
+</scroll-view>
+</view>
+
+</template>

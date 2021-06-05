@@ -1,16 +1,15 @@
-<!-- 头部区域 -->
-<!-- <view class="header" bindtap='handleToSearch'>
-  <image src='/static/images/video/video.jpg'></image>
-  <view class="search">搜索</view>
-  <image src='/static/images/video/add.png'></image>
-</view> -->
-<!-- 头部选择区域 -->
+
+<!-- 头部搜索框 -->
 <SearchInput></SearchInput>
-<scroll-view class='topScroll' scroll-x enable-flex scroll-into-view='{{"scroll"+currentId}}' scroll-with-animation>
+<!-- 标签栏 -->
+<!-- <scroll-view class='topScroll' scroll-x enable-flex scroll-into-view='{{"scroll"+currentId}}' scroll-with-animation>
   <view class="scrollItem" wx:for='{{videoGroupList}}' wx:key="id" bindtap='itemClick' id='{{"scroll"+item.id}}' data-id='{{item.id}}'>
     <view class="itemContent {{currentId==item.id?'active':''}}">{{item.name}}</view>
   </view>
-</scroll-view>
+</scroll-view> -->
+<!-- 标签栏 -->
+<import src="/template/scrollTags/scrollTags.wxml"></import>
+<template is="scrollTags" data="{{TagsList,clickTgeId}}"></template>
 <!-- 视频滑动区域 -->
 <scroll-view class="videoScroll" scroll-y bindrefresherrefresh="handleRefresher" refresher-enabled refresher-triggered="{{isRefresher}}" bindscrolltolower="handleLoadMore">
   <view class="videoScrollItem" wx:for='{{videoGroupData}}' wx:key="threadId">

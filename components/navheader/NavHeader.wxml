@@ -1,5 +1,0 @@
-<!-- components/navheader/NavHeader.wxml -->
-<view class="header">
-  <text class="recommend-title">{{title}}</text>
-  <text class="more">更多></text>
-</view>

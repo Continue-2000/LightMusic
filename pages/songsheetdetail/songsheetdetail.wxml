@@ -1,0 +1,32 @@
+<view class="songsheetHeader">
+	<view class="songsheetImage">
+		<image src='{{Info.coverImgUrl}}' />
+	</view>
+	<view class="rightinfo">
+		<text class="title">{{Info.name}}</text>
+		<view class="avator">
+			<image src='{{Info.creator.avatarUrl}}' />
+			<text>{{Info.creator.nickname}}</text>
+		</view>
+		<text class="introduce">{{Info.description}}</text>
+	</view>
+	<image class="arc" src="/static/images/profile/arc.png" />
+	<view class="aboutCount">
+		<view class="item">
+			<text class="iconfont icon-shoucang1"/>
+			<text class="count">{{Info.subscribedCount}}</text>
+		</view>
+		<view class="item">
+			<text class="iconfont icon-pinglun1"/>
+			<text class="count">{{Info.commentCount}}</text>
+		</view>
+        <view class="item">
+			<text class="iconfont icon-share"/>
+			<text class="count">{{Info.shareCount}}</text>
+		</view>
+    </view>
+</view>
+<!-- songList模板 -->
+<import src="/template/songList/songList.wxml"></import>
+<template is="songList" data="{{List,ListHeight}}" />
+

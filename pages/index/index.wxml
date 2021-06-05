@@ -12,7 +12,7 @@
       <text class="title">每日推荐</text>
     </view>
     <view class="nav-item">
-      <text class="iconfont icon-gedan"></text>
+      <text class="iconfont icon-gedan" bindtap="toSongSheet"></text>
       <text class="title">歌单</text>
     </view>
     <view class="nav-item">
@@ -28,25 +28,19 @@
       <text class="title">直播</text>
     </view>
   </view>
-  <!-- 歌曲推荐模块 -->
-  <view class="recommend">
-    <NavHeader title='推荐歌单'></NavHeader>
-    <scroll-view class="recommend-content" enable-flex scroll-x>
-      <view class="recommend-item" wx:for='{{recommendList}}' wx:key='id' bindtap='handleToDetail' data-id='{{item.id}}'>
-        <view class="image">
-          <image src='{{item.picUrl}}'></image>
-        </view>
-        <text class="introduce">{{item.name}}</text>
-      </view>
-    </scroll-view>
-  </view>
-  <!-- 排行榜模块 -->
-  <view class="ranking">
-    <NavHeader title='排行榜'></NavHeader>
+  <!-- 推荐歌单模块 -->
+    <IndexScrollItem ScrollItemInfo="{{musicItemInfo}}"></IndexScrollItem>
+  <!-- 推荐mv模块 -->
+    <IndexScrollItem ScrollItemInfo="{{mvItemInfo}}"></IndexScrollItem>
+  <!-- 推荐视频模块 -->
+    <IndexScrollItem ScrollItemInfo="{{videoItemInfo}}"></IndexScrollItem>
+
+  <!-- 超带感的说唱精选 -->
+  <!-- <view class="ranking">
+    <NavHeader title='超带感的说唱精选'></NavHeader>
     <swiper class='ranking-content' circular next-margin="60rpx">
       <swiper-item class="ranking-item" wx:for='{{rankList}}' wx:key='id'>
         <view class="swiperItem" wx:if="{{item.tracks.length}}" >
-          <view class='title'>{{item.titleName}}</view>
           <view class="songs">
             <view class="song-item" wx:for='{{item.tracks}}' wx:for-item="songitem" wx:key="id"
               wx:for-index="songindex" bindtap='handleToPlayRank' data-index='{{index*3+songindex}}'>
@@ -58,7 +52,7 @@
         </view>
       </swiper-item>
     </swiper>
-  </view>
+  </view> -->
 </view>
 
 <playStatus playing="{{playing}}" playSong="{{playSong}}" playList="{{playList}}" playIndex="{{playIndex}}" backgroundAudioManager="{{backgroundAudioManager}}" isShow="{{isShow}}" ></playStatus>

@@ -3,7 +3,7 @@
   <view class="bulletChat">弹幕区</view>
   <!-- 视频播放区域 -->
   <view class="video {{isLookComment?'moveVideo':''}}" >
-    <video loop enable-danmu autoplay object-fit='fill' src='{{playUrl}}' id="myVideo" bindtap='videoClick'></video>
+    <video loop enable-danmu autoplay object-fit='cover' src='{{playUrl}}' id="myVideo" bindtap='videoClick'></video>
   </view>
   <!-- 信息区 -->
   <view class="info">

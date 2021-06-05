@@ -128,11 +128,11 @@ Page({
     playIndex = playIndex + num;
     if (playIndex == -1) {
       wx.showLoading({
-        title: '到顶了哦,往下滑试试吧！',
+        title: '到顶了哦',
       })
       setTimeout(() => {
         wx.hideLoading()
-      }, 2000)
+      }, 1000)
       return
     }
     else {

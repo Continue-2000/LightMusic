@@ -11,9 +11,8 @@ Page({
     searchKey: '',
     inputValue: '',
     isLookMore: false,
-    hostSearchList: [],//存储10条热搜数据
+    hostSearchList: [],//存储热搜数据
     searchList: [],//搜索到的数据
-    allList: [],//存储20条数据
     isSearched: false,
     searchHistoryList: []
   },
@@ -41,9 +40,10 @@ Page({
     if (index != -1) {
       searchHistoryList.splice(index, 1)
     }
-    if (keywords)
+    if (keywords) {
       searchHistoryList.unshift(keywords)
-    wx.setStorageSync('searchHistoryList', searchHistoryList)
+      wx.setStorageSync('searchHistoryList', searchHistoryList)
+    }
   },
   // 删除搜索记录
   handleRemoveHistory() {
@@ -74,20 +74,25 @@ Page({
     })
   },
   // 获取热搜榜
-  async getHotSearchList(num) {
+  async getHotSearchList() {
+    let res = await request('/search/hot/detail')
+    console.log(res);
+    this.setData({
+      hostSearchList: res.data.slice(0, 10)
+    })
+  },
+  //获取热搜列表（详细）
+  async getHotSearchListDetail() {
     let res = await request('/search/hot/detail')
     // console.log(res);
     this.setData({
-      allList: res.data,
-      hostSearchList: res.data.slice(0, num)
+      hostSearchList: res.data,
+      isLookMore: true
     })
   },
   // 查看更多
   handleLookMore() {
-    this.setData({
-      isLookMore: true,
-      hostSearchList: this.data.allList
-    })
+    this.getHotSearchListDetail()
   },
   // 处理搜索的函数
   handleInputChange(e) {
@@ -135,7 +140,7 @@ Page({
     // 得到搜索关键词
     this.getSearchKey()
     // 得到热搜列表
-    this.getHotSearchList(10)
+    this.getHotSearchList()
 
     this.addSearchHistory()
     // 得到本地搜索记录

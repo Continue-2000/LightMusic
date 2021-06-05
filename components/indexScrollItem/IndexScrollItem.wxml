@@ -1,0 +1,15 @@
+<!-- components/navheader/NavHeader.wxml -->
+  <view class="recommend">
+<view class="header">
+  <text class="recommend-title">{{ScrollItemInfo.title}}</text>
+  <text class="more">{{ScrollItemInfo.controlName}}></text>
+</view>
+<scroll-view class="recommend-content" enable-flex scroll-x>
+      <view class="recommend-item" wx:for='{{ScrollItemInfo.recommendList}}' wx:key='id' bindtap='handleToDetail' data-id='{{item.id||item.vid}}'>
+        <view class="image">
+          <image src='{{item.picUrl||item.coverUrl}}'></image>
+        </view>
+        <text class="introduce" >{{item.name||item.title}}</text>
+      </view>
+</scroll-view>
+     </view>

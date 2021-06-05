@@ -60,7 +60,11 @@ video{
 }
 .videoName{
   margin-top: 20rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
+  max-width: 600rpx;
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: #fff;
 }
 .watchNums{
