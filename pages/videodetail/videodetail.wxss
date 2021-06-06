@@ -96,6 +96,10 @@ video{
   font-size: 50rpx;
 }
 .title{
+  max-width: 600rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: #fff;
   font-size: 26rpx;
 }

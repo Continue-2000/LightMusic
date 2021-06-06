@@ -2,7 +2,7 @@
   <view class="recommend">
 <view class="header">
   <text class="recommend-title">{{ScrollItemInfo.title}}</text>
-  <text class="more">{{ScrollItemInfo.controlName}}></text>
+  <text class="more" bindtap ="handleToControl">{{ScrollItemInfo.controlName}}></text>
 </view>
 <scroll-view class="recommend-content" enable-flex scroll-x>
       <view class="recommend-item" wx:for='{{ScrollItemInfo.recommendList}}' wx:key='id' bindtap='handleToDetail' data-id='{{item.id||item.vid}}'>

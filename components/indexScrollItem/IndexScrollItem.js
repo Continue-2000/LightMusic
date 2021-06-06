@@ -22,6 +22,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    // 前往详情
     handleToDetail(e) {
       let { ScrollItemInfo } = this.data
       if (ScrollItemInfo.songsheet) {
@@ -32,6 +33,23 @@ Component({
       }
       if (ScrollItemInfo.video) {
         handleToVideo(e.currentTarget.dataset.id, 'video')
+      }
+    },
+
+    handleToControl() {
+      let { ScrollItemInfo } = this.data
+      if (ScrollItemInfo.songsheet) {
+        wx.navigateTo({
+          url: '/pages/songsheet/songsheet',
+        });
+      }
+      if (ScrollItemInfo.mv) {
+        return
+      }
+      if (ScrollItemInfo.video) {
+        wx.switchTab({
+          url: '/pages/video/video',
+        });
       }
     }
   }

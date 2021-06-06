@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
+    "pages/top/top",
     "pages/songsheet/songsheet",
     "pages/video/video",
-    "pages/index/index",
     "pages/songsheetdetail/songsheetdetail",
     "pages/profile/profile",
     "pages/recommend/recommend",

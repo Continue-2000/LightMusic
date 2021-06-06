@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarTitleText": "歌单",
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#CCC28F"
 }

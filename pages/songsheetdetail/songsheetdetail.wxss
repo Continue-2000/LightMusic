@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     height: 400rpx;
-    background: rgb(204, 194, 143)
+    background:#CCC28F
 }
 .songsheetImage{
     width: 230rpx;

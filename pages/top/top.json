@@ -1,6 +1,6 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "歌单广场",
+  "navigationBarTitleText": "排行榜",
   "navigationBarTextStyle": "black",
   "navigationBarBackgroundColor": "#fff"
 }

@@ -1,5 +1,6 @@
 const { default: request } = require("../../utils/request")
 import { handleToPlay, handleToVideo } from "../../utils/function"
+import { FormatPrice } from "../../utils/toolfunction"
 // pages/songsheet/songsheet.js
 Page({
 
@@ -32,16 +33,15 @@ Page({
   async getSongSheetInfo(id) {
     let { Info, List } = this.data
     let res = await request('/playlist/detail', { id })
-
     res = res.playlist
     Info = {
       coverImgUrl: res.coverImgUrl,
       name: res.name,
       creator: res.creator,
       description: res.description,
-      shareCount: res.shareCount,
-      commentCount: res.commentCount,
-      subscribedCount: res.subscribedCount
+      shareCount: FormatPrice(res.shareCount),
+      commentCount: FormatPrice(res.commentCount),
+      subscribedCount: FormatPrice(res.subscribedCount)
     }
     this.setData({
       Info,

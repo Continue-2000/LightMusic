@@ -1,5 +1,7 @@
 // pages/songsheet/songsheet.js
 import request from "../../utils/request"
+import { handleToSongSheetDetail } from "../../utils/function"
+import { FormatPrice } from "../../utils/toolfunction"
 Page({
 
   /**
@@ -23,32 +25,42 @@ Page({
   // 初始化数据-------
   // 获取歌单标签函数
   async getSongSheetTags() {
+    let { songSheetList } = this.data
+    songSheetList = new Array(10)
     let res = await request('/playlist/highquality/tags')
     this.setData({
       TagsList: res.tags.slice(0, 9),
-      clickTgeId: res.tags[0].id
+      clickTgeId: res.tags[0].id,
+      songSheetList
     })
     // 调用获取精品歌单函数
     this.getBoutiqueSongSheet()
   },
-  // 获取精品歌单标签函数
+  // 获取精品歌单函数
   async getBoutiqueSongSheet() {
+    wx.showLoading({
+      title: '',
+      mask: true,
+    });
     let { TagsList, currentIndex, songSheetList } = this.data;
     let tag = TagsList[currentIndex].name
-    console.log(tag);
-    let res = await request('/top/playlist/highquality', { tag })
-    let arr = res.playlists.slice(0, 30)
+    let res = await request('/top/playlist/highquality', { cat: tag })
+    let arr = res.playlists.slice(0, 12)
+    arr = arr.map(item => {
+      item.playCount = FormatPrice(item.playCount)
+      return item
+    })
     res.playlists = arr
     res.name = tag
-    songSheetList.push(res)
+    songSheetList[currentIndex] = res
     this.setData({
       songSheetList
     })
+    wx.hideLoading();
   },
   // 事件操作--------
   // 点击标签
   TagClick(e) {
-    console.log(1);
     let tag = e.currentTarget.dataset.tag
     let currentIndex = e.currentTarget.dataset.index
     this.setData({
@@ -65,6 +77,10 @@ Page({
       currentIndex: e.detail.current
     })
     this.getBoutiqueSongSheet()
+  },
+  // 前往歌单详情页
+  handleToDetail(e) {
+    handleToSongSheetDetail(e.currentTarget.dataset.id)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -125,6 +125,12 @@ Page({
       url: '/pages/songsheet/songsheet'
     })
   },
+  // 前往排行榜
+  toTop() {
+    wx.navigateTo({
+      url: '/pages/top/top'
+    })
+  },
   // 前往推荐歌单
   handleToDetail(e) {
     handleToSongSheetDetail(e.currentTarget.dataset.id)

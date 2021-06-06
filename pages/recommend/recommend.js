@@ -18,6 +18,10 @@ Page({
   // onPageScroll: function (t) {
   //   console.log(t);
   // },
+  // 播放全部
+  toPlayAll() {
+    handleToPlay(0, this.data.recommendList)
+  },
   // 跳转播放详情页
   handleToPlayDetail(e) {
     let index = e.currentTarget.dataset.index;

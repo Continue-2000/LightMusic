@@ -61,7 +61,6 @@ Page({
     let { playList } = this.data
     console.log(type);
     let url = type == 'mv' ? '/mv/url' : '/video/url'
-    console.log(url);
     let res = await request(url, { id })
     console.log(res);
     let playUrl = type == 'mv' ? res.data.url : res.urls[0].url
