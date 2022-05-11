@@ -7,7 +7,7 @@
     <view class="songSheetContainer">
         <swiper class="songSheetSwiper" bindchange="handleChangeSwiper" current="{{currentIndex}}">
             <swiper-item wx:for="{{songSheetList}}" wx:key="name" >
-                <scroll-view class="content" enable-flex flex-y>
+                <view class="content" enable-flex flex-y>
                     <view class="contentItem" wx:for='{{item.playlists}}' wx:key="id" wx:for-item="playItem" bindtap = "handleToDetail" data-id="{{playItem.id}}">
                         <view class="image">
                          <image src="{{playItem.coverImgUrl}}" />
@@ -15,7 +15,7 @@
                         </view> 
                         <text class="itemIntroduce">{{playItem.name}}</text>
                     </view>
-                </scroll-view>
+                </view>
             </swiper-item>
         </swiper>
     </view>

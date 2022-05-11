@@ -25,7 +25,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.12.3",
+	"libVersion": "2.24.1",
 	"appid": "wx32d930746929a04a",
 	"projectname": "LightMusic",
 	"debugOptions": {

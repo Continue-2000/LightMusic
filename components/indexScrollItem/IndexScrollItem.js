@@ -1,5 +1,5 @@
 // components/navheader/NavHeader.js
-import { handleToSongSheetDetail, handleToVideo } from '../../utils/function'
+import { handleToSongSheetDetail, handleToVideo } from "../../utils/function";
 
 Component({
   /**
@@ -7,16 +7,14 @@ Component({
    */
   properties: {
     ScrollItemInfo: {
-      type: Object
-    }
+      type: Object,
+    },
   },
 
   /**
    * 组件的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 组件的方法列表
@@ -24,33 +22,35 @@ Component({
   methods: {
     // 前往详情
     handleToDetail(e) {
-      let { ScrollItemInfo } = this.data
+      let { ScrollItemInfo } = this.data;
       if (ScrollItemInfo.songsheet) {
-        handleToSongSheetDetail(e.currentTarget.dataset.id)
+        handleToSongSheetDetail(e.currentTarget.dataset.id);
       }
       if (ScrollItemInfo.mv) {
-        handleToVideo(e.currentTarget.dataset.id, 'mv')
+        handleToVideo(e.currentTarget.dataset.id, "mv");
       }
       if (ScrollItemInfo.video) {
-        handleToVideo(e.currentTarget.dataset.id, 'video')
+        handleToVideo(e.currentTarget.dataset.id, "video");
       }
     },
 
     handleToControl() {
-      let { ScrollItemInfo } = this.data
+      let { ScrollItemInfo } = this.data;
       if (ScrollItemInfo.songsheet) {
         wx.navigateTo({
-          url: '/pages/songsheet/songsheet',
+          url: "/pages/songsheet/songsheet",
         });
       }
       if (ScrollItemInfo.mv) {
-        return
+        wx.switchTab({
+          url: "/pages/video/video",
+        });
       }
       if (ScrollItemInfo.video) {
         wx.switchTab({
-          url: '/pages/video/video',
+          url: "/pages/video/video",
         });
       }
-    }
-  }
-})
+    },
+  },
+});

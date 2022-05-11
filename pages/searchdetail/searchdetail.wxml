@@ -1,7 +1,3 @@
-<scroll-view class="headerScroll" scroll-x enable-flex>
-  <view class="scrollItem" bindtap='titleClick' data-title='单曲'>
-    <text class="title {{clickTitle=='单曲'?'active':''}}">单曲</text>
-  </view>
-</scroll-view>
+
 <import src="/template/songList/songList.wxml"></import>
 <template is="songList" data="{{List,ListHeight}}" />

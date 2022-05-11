@@ -14,7 +14,7 @@
   line-height: 60rpx;
 }
 .header .iconfont{
-  color: red;
+  color: #ff5c59;
 }
 .icon-bofang1{
   font-size: 40rpx;
@@ -44,12 +44,12 @@ border-radius: 10rpx;
 
 .recommendItem .info{
   display: flex;
-  flex: 5;
+  flex: 1;
   margin-left: 20rpx;
   flex-direction: column;
 }
 .recommendList .control{
-  flex: 2;
+  width: 150rpx;
   height: 70rpx;
 }
 .control text{

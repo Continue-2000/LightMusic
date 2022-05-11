@@ -13,9 +13,11 @@
   width: 100%;
 }
 .banners{
+  margin-left: 50%;
+  transform: translateX(-50%);
   margin-top: 20rpx;
   height: 300rpx;
-  width: 100%;
+  width: 95%;
 }
 
 .swiper-item{
@@ -34,7 +36,7 @@
   display: flex;
   width: 100%;
   padding: 40rpx 0;
-  border-bottom: 1rpx solid #ccc;
+  border-bottom: 1rpx solid rgb(228, 228, 228);
 }
 .nav-item{
   flex: 1;
@@ -43,14 +45,31 @@
   align-items: center;
   text-align: center;
 }
+
 .iconfont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100rpx;
   height: 100rpx;
-  background: rgb(240,19,19);
+  background: rgb(254, 242, 242);
   border-radius: 50%;
   line-height: 100rpx;
   font-size: 50rpx;
   color: #fff;
+}
+.iconfont image{
+  position: relative;
+  width: 60rpx;
+  height: 60rpx;
+}
+.nav-item:nth-child(1) .iconfont image::after{
+  position: absolute;
+  content: attr(data-date);
+  top: -10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 25rpx;
 }
 .title{
   text-align: center;

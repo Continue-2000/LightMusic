@@ -14,7 +14,7 @@ Page({
     playlist: [], //播放列表
     List: [], //查看播放的列表
     ListHeight: 466, //查看列表的高度
-    playType: "listLoop", //播放类型
+    liked: false, //是否喜欢了
     currentTime: "", //实时时间
     totalTime: "", //总时间
     processLength: 0, //进度条长度
@@ -31,8 +31,8 @@ Page({
     const eventChannel = this.getOpenerEventChannel();
     let _this = this;
     eventChannel.on("acceptDataFromOpenerPage", function (data) {
-      console.log(data);
-      let playlist = data.data.list;
+      console.log("data", data);
+      let playlist = data.data.fm;
       let index = data.data.index;
       _this.setData({
         playlist,
@@ -42,7 +42,6 @@ Page({
       });
       _this.handleIsTheSimpleSong();
     });
-
     //监听音乐播放状态
     this.BackgroundAudioManager = wx.getBackgroundAudioManager();
     this.BackgroundAudioManager.onPlay(() => {
@@ -87,6 +86,15 @@ Page({
       });
     });
   },
+  //获取Fm
+  async getFm() {
+    console.log(1332);
+    let res = await request("/personal_fm");
+    this.setData({
+      playlist: res.data,
+      index: 0,
+    });
+  },
   // 判断是否是同首歌曲播放
   handleIsTheSimpleSong() {
     //如果没有歌或者在播放的不是同一首歌，则发送请求
@@ -123,10 +131,6 @@ Page({
   },
   // 更新数据 歌曲名 播放路径 歌词
   UpdateDate(song) {
-    // 更新歌曲名
-    wx.setNavigationBarTitle({
-      title: song.name,
-    });
     // 更新歌词
     this.getLyric(song.id);
     // 更新播放路径
@@ -172,18 +176,13 @@ Page({
   //处理类型的功能函数
   handlePlayTypeFunction(type) {
     // type:上一首还是下一首
-    let { playType, index, playlist } = this.data;
-    if (playType == "listLoop") {
-      let num = type == "pre" ? -1 : 1;
-      let len = playlist.length;
-      index = index + num;
-      if (index == -1) index = len - 1;
-      if (index == len) index = 0;
-    } else if (playType == "singerPlay") {
-      index = index;
-    } else if (playType == "randomPlay") {
-      // 生成数组随机下标
-      index = Math.floor(Math.random() * (playlist.length - 0));
+    let { index, playlist } = this.data;
+    let num = type == "pre" ? -1 : 1;
+    let len = playlist.length;
+    index = index + num;
+    if (index == -1) index = len - 1;
+    if (index == len) {
+      this.getFm();
     }
     this.setData({
       index,
@@ -196,7 +195,7 @@ Page({
     let type = e.currentTarget.dataset.type;
     if (this.data.isPlayEnd) type = "next";
     // 获得切歌类型 列表\单曲\随机
-    this.handlePlayTypeFunction(type);
+    this.handlePlayTypeFunction("next");
     // 更新歌曲详细信息
     let { playlist, index } = this.data;
     this.getSongDetail(playlist[index].id);

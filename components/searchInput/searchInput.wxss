@@ -1,25 +1,16 @@
 /* components/searchInput/searchInput.wxss */
 .header{
   height: 80rpx;
-  margin-top: 10rpx;
+  margin-top: 15rpx;
   display: flex;
   justify-content:space-around;
-  
 }
 .search{
- width: 80%;
+ width: 95%;
  height: 65rpx;
  text-align: center;
  line-height: 65rpx;
  color: #ccc;
  border-radius: 30rpx;
  background: #eee;
-}
-.left{
-  width: 55rpx;
-  height: 55rpx;
-}
-.right{
-  width: 65rpx;
-  height: 65rpx;
 }

@@ -1,10 +1,13 @@
-
-import request from '../../utils/request.js'
+import request from "../../utils/request.js";
 // pages/index/index.js
-const appInstance = getApp()
-import { handleToPlay, handleToSongSheetDetail } from '../../utils/function'
+const appInstance = getApp();
+import {
+  handleToPlay,
+  handleToPlayFm,
+  handleToSongSheetDetail,
+} from "../../utils/function";
+import moment from "moment";
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -12,103 +15,120 @@ Page({
     bannerList: [],
     rankList: [],
     rankAllList: [],
+    todayDate: "",
     // ---playStatus组件数据
-    isShow: false,//是否展示底部播放
+    isShow: false, //是否展示底部播放
     playing: false,
     playSong: {},
     playList: [],
     playIndex: 0,
+    fm: {},
     backgroundAudioManager: {},
     // ---indexScrollItem组件数据
     musicItemInfo: {},
     mvItemInfo: {},
-    videoItemInfo: {}
+    videoItemInfo: {},
   },
   /**
- * 生命周期函数--监听页面加载
- */
+   * 生命周期函数--监听页面加载
+   */
   onLoad: function (options) {
+    this.getDate();
     // 调用获取banner信息的功能函数
-    this.getBannerInfo()
+    this.getBannerInfo();
     // 调用获取推荐歌单信息的功能函数
-    this.getRecommendSongSheet()
+    this.getRecommendSongSheet();
     // 调用获取推荐mv信息的功能函数
-    this.getRecommendMv()
+    this.getRecommendMv();
     // 调用获取推荐视频信息的功能函数
-    this.getRecommendVideo()
+    this.getRecommendVideo();
   },
 
-
   // 获取信息初始化部分---------
+  //获取当前日期
+  async getDate() {
+    let date = moment(new Date()).format("D");
+    this.setData({
+      todayDate: date,
+    });
+  },
   // 获取banner信息
   async getBannerInfo() {
-    let res = await request('/banner', { type: 2 })
+    let res = await request("/banner", { type: 2 });
     this.setData({
       bannerList: res.banners,
-    })
+    });
   },
   // 获取推荐歌单信息
   async getRecommendSongSheet() {
-    let res = await request('/personalized')
-    let recommendList = res.result
+    let res = await request("/personalized");
+    let recommendList = res.result;
     // 设置IndexScrollItem信息
-    this.setScrollItemInfo('songsheet', recommendList)
+    this.setScrollItemInfo("songsheet", recommendList);
   },
   // 获取推荐mv信息
   async getRecommendMv() {
-    let res = await request('/personalized/mv')
-    let recommendList = res.result
+    let res = await request("/personalized/mv");
+    let recommendList = res.result;
     // 设置IndexScrollItem信息
-    this.setScrollItemInfo('mv', recommendList)
+    this.setScrollItemInfo("mv", recommendList);
   },
   // 获取推荐视频信息
   async getRecommendVideo() {
-    let res = await request('/video/timeline/recommend')
-    let recommendList = res.datas.map(item => {
-      item = item.data
-      return item
-    })
+    let res = await request("/video/timeline/recommend");
+    let recommendList = res.datas.map((item) => {
+      item = item.data;
+      return item;
+    });
     // 设置IndexScrollItem信息
-    this.setScrollItemInfo('video', recommendList)
+    this.setScrollItemInfo("video", recommendList);
+  },
+  // 获取Fm
+  async getFm() {
+    let res = await request("/personal_fm");
+    this.setData({
+      fm: res.data,
+    });
+    handleToPlayFm(0, res.data);
   },
   // 设置IndexScrollItem信息
   setScrollItemInfo(type, recommendList) {
-    let { musicItemInfo, mvItemInfo, videoItemInfo, } = this.data
-    if (type === 'songsheet') {
+    let { musicItemInfo, mvItemInfo, videoItemInfo } = this.data;
+    if (type === "songsheet") {
       musicItemInfo = {
-        title: '推荐歌单',
-        controlName: '更多',
+        title: "推荐歌单",
+        controlName: "更多",
         recommendList,
         songsheet: true,
-      }
+      };
       this.setData({
-        musicItemInfo
-      })
-      return
+        musicItemInfo,
+      });
+      return;
     }
-    if (type === 'mv') {
+    if (type === "mv") {
       mvItemInfo = {
-        title: '推荐mv',
-        controlName: '更多',
+        title: "推荐mv",
+        controlName: "更多",
         recommendList,
         mv: true,
-      }
+      };
       this.setData({
-        mvItemInfo
-      })
-      return
+        mvItemInfo,
+      });
+      return;
     }
-    if (type === 'video') {
+    if (type === "video") {
       videoItemInfo = {
-        title: '推荐视频',
-        controlName: '更多',
+        title: "推荐视频",
+        controlName: "更多",
         recommendList,
         video: true,
-      }
+      };
       this.setData({
-        videoItemInfo
-      })
-      return
+        videoItemInfo,
+      });
+      return;
     }
   },
 
@@ -116,35 +136,37 @@ Page({
   // 前往每日推荐
   toDayRecommend() {
     wx.navigateTo({
-      url: '/pages/recommend/recommend'
-    })
+      url: "/pages/recommend/recommend",
+    });
   },
   // 前往歌单
   toSongSheet() {
     wx.navigateTo({
-      url: '/pages/songsheet/songsheet'
-    })
+      url: "/pages/songsheet/songsheet",
+    });
   },
   // 前往排行榜
   toTop() {
     wx.navigateTo({
-      url: '/pages/top/top'
-    })
+      url: "/pages/top/top",
+    });
   },
   // 前往推荐歌单
   handleToDetail(e) {
-    handleToSongSheetDetail(e.currentTarget.dataset.id)
+    handleToSongSheetDetail(e.currentTarget.dataset.id);
   },
   // 前往播放排行榜
   handleToPlayRank(e) {
-    handleToPlay(e.currentTarget.dataset.index, this.data.rankAllList)
+    handleToPlay(e.currentTarget.dataset.index, this.data.rankAllList);
+  },
+  //前往播放FM
+  toFmPlay() {
+    this.getFm();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -157,47 +179,39 @@ Page({
         playList: appInstance.globalData.playList,
         playIndex: appInstance.globalData.playIndex,
         backgroundAudioManager: appInstance.globalData.backgroundAudioManager,
-        isShow: true
-      })
+        isShow: true,
+      });
     }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function ({ from }) {
     return {
-      title: '来自大帅的转发',
-      page: '/pages/video/video',
-      imageUrl: '/static/images/1.jpg'
-    }
-  }
-})
+      title: "来自大帅的转发",
+      page: "/pages/video/video",
+      imageUrl: "/static/images/1.jpg",
+    };
+  },
+});

@@ -1,0 +1,52 @@
+<view class="palydetailContainer">
+   
+    <view class="midContent" bindtap='changeStatus'>
+      <block wx:if="{{!isLyric}}">
+        <view class="disc ">
+          <image class="songimage" src="{{song.al.picUrl}}" />
+          <text class="songName">{{song.name}}</text>
+          <text class="singer">
+            <text wx:for='{{song.ar}}' wx:key="id">{{item.name}}</text>
+          </text>
+        </view>
+      </block>
+      <block wx:else>
+        <text>歌词区</text>
+      </block>
+    </view>
+    <!-- 播放列表栏 -->
+    <import src="/template/songList/songList.wxml"></import>
+    <template wx:if="{{isLookSongList}}" is="songList" data="{{List,ListHeight}}" />
+    <!-- 进度条区域 -->
+    <view class="progressBar">
+      <text class="countTime ">{{currentTime}}</text>
+      <view class="lineBar">
+        <view class="curentTimeBar" style="width:{{processLength+'rpx'}}">
+          <view class="currentCircle"></view>
+        </view>
+      </view>
+      <text class="countTime ">{{totalTime}}</text>
+    </view>
+    <!-- 底部控制区域 -->
+    <view class="buttomcontrol">
+      <view class="order" bindtap="changePlayType">
+        <image  src='/static/images/playdetail//unlike.png'></image>
+      </view>
+      <view class="like">
+        <image wx:if="{{!liked}}" src='/static/images/playdetail/like.png' bindtap='handleLike' ></image>
+        <image wx:else src='/static/images/playdetail/liked.png'></image>
+      </view>
+      <view class="play">
+        <view class="box" bindtap='handlePlay'>
+          <image class="playingImage" wx:if="{{playing}}" src='/static/images/playdetail/playing.png'></image>
+          <image wx:else src='/static/images/playdetail/pause.png'></image>
+        </view>
+      </view>
+      <view class="next">
+        <image src='/static/images/playdetail/pre.png' class="nextimg" bindtap='handleCutSong' data-type='next'></image>
+      </view>
+      <view class="list" bindtap="handleLookSongList">
+        <image src='/static/images/playdetail/comment.png'></image>
+      </view>
+    </view>
+  </view>

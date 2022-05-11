@@ -1,39 +1,57 @@
 <SearchInput class="searchInput"></SearchInput>
 <view class="index_container">
-  <swiper class="banners" indicator-dots indicator-color='ivory' indicator-active-color='#d43c33' autoplay>
-    <swiper-item wx:for='{{bannerList}}' wx:key='bannerId'>
-      <image src='{{item.pic}}'class="bannerImage"></image>
+  <swiper
+    class="banners"
+    indicator-dots
+    indicator-color="ivory"
+    indicator-active-color="#d43c33"
+    autoplay
+  >
+    <swiper-item wx:for="{{ bannerList }}" wx:key="bannerId">
+      <image src="{{ item.pic }}" class="bannerImage"></image>
     </swiper-item>
   </swiper>
   <!-- 图标导航区域 -->
   <view class="navContent">
-    <view class="nav-item" bindtap='toDayRecommend'>
-      <text class="iconfont icon-tuijian1"></text>
+    <view class="nav-item" bindtap="toDayRecommend">
+      <view class="iconfont">
+        <image
+          src="/static/images/navs/recommend.png"
+          data-date="{{ todayDate }}"
+        >
+        </image>
+      </view>
       <text class="title">每日推荐</text>
     </view>
-    <view class="nav-item">
-      <text class="iconfont icon-gedan" bindtap="toSongSheet"></text>
+    <view class="nav-item" bindtap="toSongSheet">
+      <view class="iconfont">
+        <image
+          src="/static/images/navs/songsheet.png"
+          data-date="{{ todayDate }}"
+        >
+        </image>
+      </view>
       <text class="title">歌单</text>
     </view>
-    <view class="nav-item">
-      <text class="iconfont icon-paihangbang--" bindtap="toTop"></text>
+    <view class="nav-item" bindtap="toTop">
+      <view class="iconfont">
+        <image src="/static/images/navs/top.png" data-date="{{ todayDate }}">
+        </image>
+      </view>
       <text class="title">排行榜</text>
     </view>
-    <view class="nav-item ">
-      <text class="iconfont icon-diantai"></text>
-      <text class="title">电台</text>
-    </view>
-    <view class="nav-item">
-      <text class="iconfont icon-zhibo1"></text>
-      <text class="title">直播</text>
+    <view class="nav-item" bindtap="toFmPlay">
+      <view class="iconfont">
+        <image src="/static/images/navs/radio.png" data-date="{{ todayDate }}">
+        </image>
+      </view>
+      <text class="title">私人FM</text>
     </view>
   </view>
   <!-- 推荐歌单模块 -->
-    <IndexScrollItem ScrollItemInfo="{{musicItemInfo}}"></IndexScrollItem>
+  <IndexScrollItem ScrollItemInfo="{{ musicItemInfo }}"></IndexScrollItem>
   <!-- 推荐mv模块 -->
-    <IndexScrollItem ScrollItemInfo="{{mvItemInfo}}"></IndexScrollItem>
-  <!-- 推荐视频模块 -->
-    <IndexScrollItem ScrollItemInfo="{{videoItemInfo}}"></IndexScrollItem>
+  <IndexScrollItem ScrollItemInfo="{{ mvItemInfo }}"></IndexScrollItem>
 
   <!-- 超带感的说唱精选 -->
   <!-- <view class="ranking">
@@ -55,4 +73,11 @@
   </view> -->
 </view>
 
-<playStatus playing="{{playing}}" playSong="{{playSong}}" playList="{{playList}}" playIndex="{{playIndex}}" backgroundAudioManager="{{backgroundAudioManager}}" isShow="{{isShow}}" ></playStatus>
+<playStatus
+  playing="{{ playing }}"
+  playSong="{{ playSong }}"
+  playList="{{ playList }}"
+  playIndex="{{ playIndex }}"
+  backgroundAudioManager="{{ backgroundAudioManager }}"
+  isShow="{{ isShow }}"
+></playStatus>

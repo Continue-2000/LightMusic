@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/fmdetail/fmdetail",
     "pages/top/top",
     "pages/songsheet/songsheet",
     "pages/video/video",
@@ -13,28 +14,25 @@
     "pages/videodetail/videodetail",
     "pages/login/login"
   ],
-  "requiredBackgroundModes": [
-    "audio",
-    "location"
-  ],
+  "requiredBackgroundModes": ["audio", "location"],
   "window": {
-    "navigationBarBackgroundColor": "#d43c33",
-    "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "网易云音乐"
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "轻音乐"
   },
   "tabBar": {
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "发现",
-        "iconPath": "/static/images/tabbar/find.png",
-        "selectedIconPath": "/static/images/tabbar/finded.png"
+        "text": "首页",
+        "iconPath": "/static/images/tabbar/home.png",
+        "selectedIconPath": "/static/images/tabbar/homed.png"
       },
       {
         "pagePath": "pages/video/video",
-        "text": "播客",
-        "iconPath": "/static/images/tabbar/video.png",
-        "selectedIconPath": "/static/images/tabbar/videoed.png"
+        "text": "mv",
+        "iconPath": "/static/images/tabbar/mv.png",
+        "selectedIconPath": "/static/images/tabbar/mved.png"
       },
       {
         "pagePath": "pages/profile/profile",
