@@ -32,8 +32,8 @@
       <view class="order" bindtap="changePlayType">
         <image  src='/static/images/playdetail//unlike.png'></image>
       </view>
-      <view class="like">
-        <image wx:if="{{!liked}}" src='/static/images/playdetail/like.png' bindtap='handleLike' ></image>
+      <view class="like" bindtap = "handleLike">
+        <image wx:if="{{!isLike}}" src='/static/images/playdetail/like.png' ></image>
         <image wx:else src='/static/images/playdetail/liked.png'></image>
       </view>
       <view class="play">

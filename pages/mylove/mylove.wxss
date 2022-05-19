@@ -87,9 +87,8 @@ flex-direction: column;
     display: flex;
     text-align: center;
 }
-.aboutCount .item:nth-child(1){
-    background-color: rgb(82, 72, 72);
-}
+
+
 .aboutCount .item:nth-child(2){
     border-left: 1rpx solid #ccc;
     border-right: 1rpx solid #ccc;

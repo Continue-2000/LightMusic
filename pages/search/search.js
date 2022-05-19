@@ -34,7 +34,6 @@ Page({
   // 添加搜索记录到本地
   addSearchHistory(keywords = "") {
     let { searchHistoryList } = this.data;
-    console.log("bol", Array.isArray(searchHistoryList));
     let index = searchHistoryList.indexOf(keywords);
     if (index != -1) {
       searchHistoryList.splice(index, 1);
@@ -42,7 +41,6 @@ Page({
     if (keywords) {
       console.log("searchHistoryList", searchHistoryList);
       searchHistoryList.unshift(keywords);
-      console.log("searchHistoryList", searchHistoryList);
       wx.setStorageSync("searchHistoryList", JSON.stringify(searchHistoryList));
     }
   },

@@ -31,7 +31,7 @@
         >
         </image>
       </view>
-      <text class="title">歌单</text>
+      <text class="title">歌单广场</text>
     </view>
     <view class="nav-item" bindtap="toTop">
       <view class="iconfont">
@@ -52,25 +52,6 @@
   <IndexScrollItem ScrollItemInfo="{{ musicItemInfo }}"></IndexScrollItem>
   <!-- 推荐mv模块 -->
   <IndexScrollItem ScrollItemInfo="{{ mvItemInfo }}"></IndexScrollItem>
-
-  <!-- 超带感的说唱精选 -->
-  <!-- <view class="ranking">
-    <NavHeader title='超带感的说唱精选'></NavHeader>
-    <swiper class='ranking-content' circular next-margin="60rpx">
-      <swiper-item class="ranking-item" wx:for='{{rankList}}' wx:key='id'>
-        <view class="swiperItem" wx:if="{{item.tracks.length}}" >
-          <view class="songs">
-            <view class="song-item" wx:for='{{item.tracks}}' wx:for-item="songitem" wx:key="id"
-              wx:for-index="songindex" bindtap='handleToPlayRank' data-index='{{index*3+songindex}}'>
-              <image src='{{songitem.al.picUrl}}'></image>
-              <text class='count'>{{songindex+1}}</text>
-              <text class='songname'>{{songitem.name}}</text>
-            </view>
-          </view>
-        </view>
-      </swiper-item>
-    </swiper>
-  </view> -->
 </view>
 
 <playStatus

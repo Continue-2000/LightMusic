@@ -66,9 +66,29 @@ Page({
   },
   //我的喜欢
   toMyLove() {
-    wx.navigateTo({
-      url: "/pages/mylove/mylove",
-    });
+    if (wx.getStorageSync("userinfo")) {
+      wx.navigateTo({
+        url: "/pages/mylove/mylove",
+      });
+    } else {
+      wx.showToast({
+        title: "需要先登录哦",
+        icon: "none",
+      });
+    }
+  },
+  //我的歌单
+  toMySongSheet() {
+    if (wx.getStorageSync("userinfo")) {
+      wx.navigateTo({
+        url: "/pages/mysongsheet/mysongsheet",
+      });
+    } else {
+      wx.showToast({
+        title: "需要先登录哦",
+        icon: "none",
+      });
+    }
   },
   // 滑动
   handleTouchStart(e) {

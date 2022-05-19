@@ -19,6 +19,7 @@
   "description": "",
   "dependencies": {
     "moment": "^2.29.1",
-    "pubsub-js": "^1.9.3"
+    "pubsub-js": "^1.9.3",
+    "ulid": "^2.3.0"
   }
 }

@@ -12,8 +12,11 @@
 	</view>
 	<image class="arc" src="/static/images/profile/arc.png" />
 	<view class="aboutCount">
-		<view class="item">
-			<text class="iconfont icon-shoucang1"/>
+		<view class="item" bindtap = "handleSub">
+			<view class="subitem">
+                <image wx:if="{{!isSub}}" src="/static/images/songsheetdetail/sub.png"></image>
+				<image wx:else src="/static/images/songsheetdetail/subed.png"></image>
+            </view>
 			<text class="count">{{Info.subscribedCount}}</text>
 		</view>
 		<view class="item">

@@ -14,7 +14,7 @@ Page({
     playlist: [], //播放列表
     List: [], //查看播放的列表
     ListHeight: 466, //查看列表的高度
-    liked: false, //是否喜欢了
+    isLike: false, //是否喜欢了
     currentTime: "", //实时时间
     totalTime: "", //总时间
     processLength: 0, //进度条长度
@@ -95,6 +95,18 @@ Page({
       index: 0,
     });
   },
+  //是否歌曲
+  async likeSong(like) {
+    let { song } = this.data;
+    let id = song.id;
+    let res = await request("/like", { id, like }).catch((err) => {
+      wx.showToast({
+        title: err.message,
+        icon: "none",
+      });
+    });
+    console.log(res);
+  },
   // 判断是否是同首歌曲播放
   handleIsTheSimpleSong() {
     //如果没有歌或者在播放的不是同一首歌，则发送请求
@@ -167,6 +179,18 @@ Page({
     this.setData({
       playType: types[index],
     });
+  },
+  //喜欢
+  handleLike() {
+    let { isLike } = this.data;
+    isLike = !isLike;
+    this.setData({
+      isLike,
+    });
+
+    this.likeSong(isLike);
+
+    console.log(11111);
   },
   //播放/暂停
   handlePlay() {

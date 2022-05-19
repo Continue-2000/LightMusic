@@ -86,6 +86,11 @@ flex-direction: column;
     display: flex;
     text-align: center;
 }
+.aboutCount .item .subitem image{
+    margin-top: 21rpx;
+    width: 38rpx;
+    height: 38rpx;
+}
 .aboutCount .item:nth-child(2){
     border-left: 1rpx solid #ccc;
     border-right: 1rpx solid #ccc;

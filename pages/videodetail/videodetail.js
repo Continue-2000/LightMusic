@@ -1,25 +1,24 @@
 // pages/viedodetail/videodetail.js
-import request from '../../utils/request'
+import request from "../../utils/request";
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     playId: 0,
-    playUrl: '',
-    type: '',
+    playUrl: "",
+    type: "",
     isPlay: true,
-    playInfo: '',//mv数据
-    playIndex: 0,//正在播放的序号
-    offset: 0,//加载的其他视频的页数
-    playList: [],//播放的列表
+    playInfo: "", //mv数据
+    playIndex: 0, //正在播放的序号
+    offset: 0, //加载的其他视频的页数
+    playList: [], //播放的列表
     startY: 0,
     moveY: 0,
     moveDistanceY: 0,
-    translateY: 'translateY(0)',
-    transation: '',
-    isLookComment: false//是否看评论
+    translateY: "translateY(0)",
+    transation: "",
+    isLookComment: false, //是否看评论
   },
 
   /**
@@ -27,188 +26,167 @@ Page({
    */
   onLoad: function (options) {
     // 接收视频/mv数据
-    const eventChannel = this.getOpenerEventChannel()
-    let _this = this
-    eventChannel.on('acceptDataFromOpenerPage', function (data) {
+    const eventChannel = this.getOpenerEventChannel();
+    let _this = this;
+    eventChannel.on("acceptDataFromOpenerPage", function (data) {
       console.log(data);
-      let playId = data.data.id
-      let type = data.data.type
+      let playId = data.data.id;
+      let type = data.data.type;
       _this.setData({
         playId,
-        type
-      })
-      _this.getPlayUrl(playId, type)
-    })
-    this.videocontext = wx.createVideoContext('myVideo', this)
+        type,
+      });
+      _this.getPlayUrl(playId, type);
+    });
+    this.videocontext = wx.createVideoContext("myVideo", this);
 
     // 获取播放地址
-
   },
   // 暂停继续播放
   videoClick() {
     let { isPlay } = this.data;
-    isPlay = !isPlay
-    if (isPlay)
-      this.videocontext.play()
-    else
-      this.videocontext.pause()
+    isPlay = !isPlay;
+    if (isPlay) this.videocontext.play();
+    else this.videocontext.pause();
     this.setData({
-      isPlay
-    })
+      isPlay,
+    });
   },
   // 获取播放地址
   async getPlayUrl(id, type) {
-    let { playList } = this.data
+    let { playList } = this.data;
     console.log(type);
-    let url = type == 'mv' ? '/mv/url' : '/video/url'
-    let res = await request(url, { id })
+    let url = type == "mv" ? "/mv/url" : "/video/url";
+    let res = await request(url, { id });
     console.log(res);
-    let playUrl = type == 'mv' ? res.data.url : res.urls[0].url
-    playList.push(playUrl)
+    let playUrl = type == "mv" ? res.data.url : res.urls[0].url;
+    playList.push(playUrl);
     this.setData({
       playUrl,
-      playList
-    })
-    this.getPlayInfo(id, type)
+      playList,
+    });
+    this.getPlayInfo(id, type);
   },
   // 获取mv/视频数据
   async getPlayInfo(id, type) {
-    let url = type == 'mv' ? '/mv/detail' : '/video/detail'
+    let url = type == "mv" ? "/mv/detail" : "/video/detail";
     let res;
-    if (type == 'mv')
-      res = await request(url, { mvid: id })
-    else if (type == 'video')
-      res = await request(url, { id })
+    if (type == "mv") res = await request(url, { mvid: id });
+    else if (type == "video") res = await request(url, { id });
     this.setData({
-      playInfo: res.data
-    })
+      playInfo: res.data,
+    });
   },
   // 滑动视频
   // 滑动的起点
   handleTouchStart(e) {
     this.setData({
-      startY: e.touches[0].clientY
-    })
+      startY: e.touches[0].clientY,
+    });
     console.log(e);
   },
   handleTouchMove(e) {
-    let { startY, moveY, moveDistanceY } = this.data
+    let { startY, moveY, moveDistanceY } = this.data;
     moveY = e.touches[0].clientY;
     moveDistanceY = moveY - startY;
     this.setData({
-      moveDistanceY
-    })
+      moveDistanceY,
+    });
     // this.setData({
-    //   translateY: `translateY(${moveDistanceY}rpx)`
-    // })
+    //   translateY: `translateY(${moveDistanceY}rpx)`,
+    // });
   },
   handleTouchEnd() {
     // this.setData({
-    //   transition: '1s linear',
-    //   translateY: `translateY(0rpx)`
-    // })
-    let { moveDistanceY } = this.data
+    //   transition: "1s linear",
+    //   translateY: `translateY(0rpx)`,
+    // });
+    let { moveDistanceY } = this.data;
     if (moveDistanceY > 80) {
-      console.log('上滑');
-      this.changePlay(-1)
-    }
-    else if (moveDistanceY < -80) {
-      console.log('下滑')
-      this.changePlay(1)
+      console.log("下滑");
+      this.changePlay(-1);
+    } else if (moveDistanceY < -80) {
+      console.log("上滑");
+      this.changePlay(1);
     }
     this.setData({
-      moveDistanceY: 0
-    })
+      moveDistanceY: 0,
+    });
   },
   // 滑动视频的功能函数
   changePlay(num) {
-
+    console.log(11111333);
     let { playIndex, playList, offset } = this.data;
     playIndex = playIndex + num;
     if (playIndex == -1) {
       wx.showLoading({
-        title: '到顶了哦',
-      })
+        title: "到顶了哦",
+      });
       setTimeout(() => {
-        wx.hideLoading()
-      }, 1000)
-      return
-    }
-    else {
+        wx.hideLoading();
+      }, 1000);
+      return;
+    } else {
       wx.showLoading({
-        title: '加载中',
-      })
+        title: "加载中",
+      });
       if (playIndex === playList.length) {
-        this.getOtherList(offset)
+        this.getOtherList(offset);
       }
       this.setData({
         playIndex,
-        playUrl: playList[playIndex]
-      })
+        playUrl: playList[playIndex],
+      });
     }
-    wx.hideLoading()
+    wx.hideLoading();
   },
   // 获取其他视频
   async getOtherList(offset) {
-    let res = await request('/video/timeline/all', { offset })
-    res.datas.forEach(item => {
-      this.getPlayUrl(item.data.vid, 'video')
-    })
+    let res = await request("/mv/all", { offset });
+    res.data.forEach((item) => {
+      this.getPlayUrl(item.id, "mv");
+    });
   },
 
   // 右侧控制栏
   handleLookComment() {
     this.setData({
-      isLookComment: !this.data.isLookComment
-    })
+      isLookComment: !this.data.isLookComment,
+    });
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  }
-})
+  onShareAppMessage: function () {},
+});

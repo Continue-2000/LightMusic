@@ -1,1 +1,19 @@
-<view></view>
+<view class="mysongSheet">
+  <block wx:for="{{ songSheetList }}" wx:key="id">
+    <view
+      class="songSheetItem"
+      bindtap="handleToDetail"
+      data-id="{{ item.id }}"
+    >
+      <view class="image">
+        <image src="{{ item.coverImgUrl }}"></image>
+      </view>
+      <view class="info">
+        <text class="title">{{ item.name }}</text>
+        <text class="introduce"
+          >{{ item.trackCount }}首 {{ item.description }}</text
+        >
+      </view>
+    </view>
+  </block>
+</view>

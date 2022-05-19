@@ -1,9 +1,9 @@
 <view class="backImage">
   <image src='/static/images/recommend/recommendbackimg.jpg' />
   <view class="date">
-    <text class="day">29</text>
-    <text class="month">/05</text>
-    <view class="fortune">查看今日运势 ></view>
+    <text class="day">{{d}}</text>
+    <text class="month">/{{m}}</text>
+    <view class="fortune">查看今日运势></view>
   </view>
 </view>
 <!-- songList模板 -->

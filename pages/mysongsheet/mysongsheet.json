@@ -1,4 +1,6 @@
 {
-  "component": true,
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarTitleText": "收藏的歌单",
+  "navigationBarTextStyle": "black",
+  "navigationBarBackgroundColor": "#fffF"
 }

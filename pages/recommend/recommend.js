@@ -1,12 +1,14 @@
 // pages/recommend/recommend.js
 import request from "../../utils/request";
-import { handleToPlay } from "../../utils/function";
-
+import { handleToPlay, handleToVideo } from "../../utils/function";
+import moment from "moment";
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    d: "",
+    m: "",
     scrollheight: "",
     recommendList: [],
     List: [],
@@ -32,6 +34,7 @@ Page({
    */
   onLoad: function (options) {
     this.getRecommendList();
+    this.getDate();
   },
   //获得推荐列表
   async getRecommendList() {
@@ -48,6 +51,19 @@ Page({
         icon: "none",
       });
     }
+  },
+  //获取日期
+  getDate() {
+    let date = moment(new Date()).format("M-D");
+    let [m, d] = date.split("-");
+    this.setData({
+      m,
+      d,
+    });
+  },
+  //前往播放视频
+  handleToPlayMv(e) {
+    handleToVideo(e.currentTarget.dataset.mv, "mv");
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

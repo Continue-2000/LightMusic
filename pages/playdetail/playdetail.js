@@ -13,12 +13,21 @@ Page({
     index: 0, //正在播放的序号
     playlist: [], //播放列表
     List: [], //查看播放的列表
+    palyedList: [], //已经播放过的列表（用于随机播放）
     ListHeight: 466, //查看列表的高度
     playType: "listLoop", //播放类型
     currentTime: "", //实时时间
+    currentSecond: 0,
     totalTime: "", //总时间
     processLength: 0, //进度条长度
     isLyric: false, //是否看歌词
+    LyricObjArr: [], //歌词数组
+    lyricIndex: 0, //当前播放下标
+    flag: true, //是否滚动完
+    upDistance: 0, //滚动的距离
+    lyricDivHeight: 0,
+    lyricScrollHeight: 0,
+    lyricArea: "",
     isPlayEnd: false, //是否时自然播放
     isLookSongList: false, //是否查看播放列表
   },
@@ -26,7 +35,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // appInstance.handleToPlay()
+    // appInstance.handleToPlay();
     // 接收歌曲数据
     const eventChannel = this.getOpenerEventChannel();
     let _this = this;
@@ -48,7 +57,6 @@ Page({
     this.BackgroundAudioManager.onPlay(() => {
       let { song, playlist, index } = this.data;
       this.updatePlayStatus(true);
-      console.log(2222222);
       appInstance.globalData.playingId = song.id;
       appInstance.globalData.playSong = song;
       appInstance.globalData.playList = playlist;
@@ -78,6 +86,7 @@ Page({
         this.BackgroundAudioManager.currentTime * 1000
       ).format("mm:ss");
       // 修改进度条长度
+      this.handleLyricTrans(this.BackgroundAudioManager.currentTime);
       let processLength =
         528.28 *
         ((this.BackgroundAudioManager.currentTime * 1000) / this.data.song.dt);
@@ -85,6 +94,20 @@ Page({
         currentTime,
         processLength,
       });
+    });
+    const query = this.createSelectorQuery();
+    // query
+    //   .select(".lyricArea")
+    //   .boundingClientRect((res) => {
+    //     console.log("lyricArea", res);
+    //     this.setData({
+    //       lyricArea: res,
+    //     });
+    //   })
+    //   .exec();
+
+    query.select(".lyricArea").node(function (res) {
+      console.log("lyricArea", res);
     });
   },
   // 判断是否是同首歌曲播放
@@ -172,7 +195,7 @@ Page({
   //处理类型的功能函数
   handlePlayTypeFunction(type) {
     // type:上一首还是下一首
-    let { playType, index, playlist } = this.data;
+    let { playType, index, playlist, palyedList } = this.data;
     if (playType == "listLoop") {
       let num = type == "pre" ? -1 : 1;
       let len = playlist.length;
@@ -183,11 +206,27 @@ Page({
       index = index;
     } else if (playType == "randomPlay") {
       // 生成数组随机下标
-      index = Math.floor(Math.random() * (playlist.length - 0));
+      index = this.getRandomIndex();
     }
+    palyedList.push(index);
     this.setData({
       index,
+      palyedList,
     });
+  },
+  //获取随机歌曲下标
+  getRandomIndex() {
+    let { palyedList, playlist } = this.data;
+    let index = Math.floor(Math.random() * (playlist.length - 0));
+    if (palyedList.length === playlist.length) {
+      palyedList = [];
+      return index;
+    }
+    if (palyedList.indexOf(index) != -1) {
+      return getRandomIndex();
+    }
+    palyedList.push(index);
+    return index;
   },
   // 切歌
   handleCutSong(e) {
@@ -264,7 +303,98 @@ Page({
   // 获取歌词
   async getLyric(id) {
     let res = await request("/lyric", { id });
-    console.log(res);
+    this.handleAnalyzeLyrics(res.lrc.lyric);
+    this.setData({
+      lyricIndex: 0,
+      upDistance: 0,
+    });
+  },
+  //解析歌词
+  handleAnalyzeLyrics(lyric) {
+    if (lyric === "") {
+      return { lyric: [{ time: 0, lyric: "这个地方没有歌词！", uid: 520520 }] };
+    }
+    let LyricObjArr = [];
+    let LyricArr = lyric.split(/\n/);
+    // 匹配中括号里正则的
+    const regTime = /\d{2}:\d{2}.\d{2,3}/;
+    // 循环遍历歌曲数组
+    for (let i = 0; i < LyricArr?.length; i++) {
+      if (LyricArr[i] === "") continue;
+      const time = this.formatLyricTime(LyricArr[i].match(regTime)[0]);
+      if (LyricArr[i].split("]")[1] !== "") {
+        LyricObjArr.push({
+          time: time,
+          lyric: LyricArr[i].split("]")[1],
+          uid: parseInt(Math.random().toString().slice(-6)),
+        });
+      }
+    }
+    this.setData({
+      LyricObjArr,
+    });
+    console.log("LyricObjArr", LyricObjArr);
+  },
+  //格式化时间
+  formatLyricTime(time) {
+    const regMin = /.*:/;
+    const regSec = /:.*\./;
+    const regMs = /\./;
+
+    const min = parseInt(time.match(regMin)[0].slice(0, 2));
+    let sec = parseInt(time.match(regSec)[0].slice(1, 3));
+    const ms = time.slice(
+      time.match(regMs).index + 1,
+      time.match(regMs).index + 3
+    );
+    if (min !== 0) {
+      sec += min * 60;
+    }
+    return Number(sec + "." + ms);
+  },
+  // 滚动
+  handleLyricTrans(currentSecond) {
+    let {
+      LyricObjArr,
+      lyricIndex,
+      flag,
+      lyricHeight,
+      lyricScrollHeight,
+      lyricArea,
+      upDistance,
+    } = this.data;
+    let len = LyricObjArr.length;
+    let item = lyricIndex < len ? LyricObjArr[lyricIndex + 1] : {};
+    if (flag && currentSecond > item.time) {
+      lyricIndex++;
+      const query = this.createSelectorQuery();
+      let itemDom = query.selectAll(".lyricArea text")[lyricIndex];
+      let top = itemDom;
+      if (lyricIndex >= len) {
+        flag = false;
+        return;
+      }
+      // if (lyricArea) {
+      //   lyricArea.scrollTo(0);
+      // }
+      if (lyricIndex > 4) {
+        this.setData({
+          upDistance: upDistance - 60,
+        });
+      }
+      // lyricScrollHeight += lyricItems[lyricIndex].offsetHeight;
+      // if (lyricArea) {
+      //   let lyricItems = lyricArea.querySelectorAll("view");
+      //   lyricArea.style.transform = `translateY(${
+      //     lyricHeight - lyricScrollHeight
+      //   }px)`;
+      // }
+      this.setData({
+        lyricIndex,
+        lyricScrollHeight,
+      });
+      console.log("lyricIndex", lyricIndex);
+    }
   },
 
   /**
