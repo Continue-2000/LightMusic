@@ -1,6 +1,8 @@
 // pages/playdetail/playdetail.js
 import request from "../../utils/request";
 import moment from "moment";
+import { handleAnalyzeLyrics } from "../../utils/function";
+
 var appInstance = getApp();
 Page({
   /**
@@ -13,12 +15,21 @@ Page({
     index: 0, //正在播放的序号
     playlist: [], //播放列表
     List: [], //查看播放的列表
+    palyedList: [], //已经播放过的列表（用于随机播放）
     ListHeight: 466, //查看列表的高度
-    isLike: false, //是否喜欢了
+    playType: "listLoop", //播放类型
     currentTime: "", //实时时间
+    currentSecond: 0,
     totalTime: "", //总时间
     processLength: 0, //进度条长度
     isLyric: false, //是否看歌词
+    LyricObjArr: [], //歌词数组
+    lyricIndex: 0, //当前播放下标
+    flag: true, //是否滚动完
+    upDistance: 0, //滚动的距离
+    lyricDivHeight: 0,
+    lyricScrollHeight: 0,
+    lyricArea: "",
     isPlayEnd: false, //是否时自然播放
     isLookSongList: false, //是否查看播放列表
   },
@@ -77,6 +88,8 @@ Page({
         this.BackgroundAudioManager.currentTime * 1000
       ).format("mm:ss");
       // 修改进度条长度
+      //移动滚动条
+      this.handleLyricTrans(this.BackgroundAudioManager.currentTime);
       let processLength =
         528.28 *
         ((this.BackgroundAudioManager.currentTime * 1000) / this.data.song.dt);
@@ -287,9 +300,38 @@ Page({
   // 获取歌词
   async getLyric(id) {
     let res = await request("/lyric", { id });
-    console.log(res);
+    let LyricObjArr = handleAnalyzeLyrics(res.lrc.lyric);
+    this.setData({
+      lyricIndex: 0,
+      upDistance: 0,
+      LyricObjArr,
+    });
   },
-
+  // 滚动
+  handleLyricTrans(currentSecond) {
+    let { LyricObjArr, lyricIndex, flag, upDistance } = this.data;
+    let len = LyricObjArr.length;
+    let item = lyricIndex < len ? LyricObjArr[lyricIndex + 1] : {};
+    if (flag && currentSecond > item.time) {
+      lyricIndex++;
+      const query = this.createSelectorQuery();
+      let itemDom = query.selectAll(".lyricArea text")[lyricIndex];
+      let top = itemDom;
+      if (lyricIndex >= len) {
+        flag = false;
+        return;
+      }
+      if (lyricIndex > 4) {
+        this.setData({
+          upDistance: upDistance - 60,
+        });
+      }
+      this.setData({
+        lyricIndex,
+      });
+      console.log("lyricIndex", lyricIndex);
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

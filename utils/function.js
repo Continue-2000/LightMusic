@@ -101,3 +101,44 @@ export const handleToSongSheetDetail = function (id) {
     },
   });
 };
+// 解析歌词
+export const handleAnalyzeLyrics = function (lyric) {
+  if (lyric === "") {
+    return { lyric: [{ time: 0, lyric: "这个地方没有歌词！", uid: 520520 }] };
+  }
+  let LyricObjArr = [];
+  let LyricArr = lyric.split(/\n/);
+  // 匹配中括号里正则的
+  const regTime = /\d{2}:\d{2}.\d{2,3}/;
+  //格式化时间
+  const formatLyricTime = function (time) {
+    const regMin = /.*:/;
+    const regSec = /:.*\./;
+    const regMs = /\./;
+
+    const min = parseInt(time.match(regMin)[0].slice(0, 2));
+    let sec = parseInt(time.match(regSec)[0].slice(1, 3));
+    const ms = time.slice(
+      time.match(regMs).index + 1,
+      time.match(regMs).index + 3
+    );
+    if (min !== 0) {
+      sec += min * 60;
+    }
+    return Number(sec + "." + ms);
+  };
+  // 循环遍历歌曲数组
+  for (let i = 0; i < LyricArr?.length; i++) {
+    if (LyricArr[i] === "") continue;
+    const time = formatLyricTime(LyricArr[i].match(regTime)[0]);
+    if (LyricArr[i].split("]")[1] !== "") {
+      LyricObjArr.push({
+        time: time,
+        lyric: LyricArr[i].split("]")[1],
+        uid: parseInt(Math.random().toString().slice(-6)),
+      });
+    }
+  }
+
+  return LyricObjArr;
+};

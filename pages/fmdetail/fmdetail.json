@@ -1,5 +1,6 @@
 {
   "usingComponents": {},
   "navigationBarTitleText": "私人FM",
-  "navigationBarBackgroundColor": "#ADADAD"
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#3d3d3d"
 }

@@ -209,9 +209,9 @@ Page({
    */
   onShareAppMessage: function ({ from }) {
     return {
-      title: "来自大帅的转发",
+      title: "来自转发",
       page: "/pages/video/video",
-      imageUrl: "/static/images/1.jpg",
+      imageUrl: "/static/images/header.jpg",
     };
   },
 });

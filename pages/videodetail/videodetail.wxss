@@ -5,6 +5,10 @@
   height: 100vh;
   background: #000;
 }
+.videoSwiper{
+  width: 100%;
+  height: 100%;
+}
 .bulletChat{
   width: 100%;
   height: 200rpx;
@@ -12,7 +16,7 @@
 .video{
   width: 100%;
   height: 480rpx;
-
+  transition: none .3s;
 }
 .moveVideo{
   position:absolute;
@@ -20,7 +24,7 @@
   top: 0;
 }
 video{
-    display: block;
+  display: block;
   width: 100%;
   height: 100%;
 }
@@ -32,9 +36,11 @@ video{
 }
 
 .authorinfo{
-  position:relative;
+  position:fixed;
   flex: 1;
-
+  left: 0;
+  bottom:26rpx;
+  width:calc(100% - 130rpx);
 }
 .content{
   display: flex;
@@ -103,3 +109,4 @@ video{
   color: #fff;
   font-size: 26rpx;
 }
+@import "/template/comment/comment.wxss"

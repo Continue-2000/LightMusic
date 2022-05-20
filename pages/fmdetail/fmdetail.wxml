@@ -11,7 +11,11 @@
         </view>
       </block>
       <block wx:else>
-        <text>歌词区</text>
+        <view class="lyricView">
+          <view class="lyricArea"  style="transform: translateY({{upDistance}}rpx);">
+            <text wx:for="{{LyricObjArr}}" wx:key="uid" class="{{index===lyricIndex?'lyricing':''}}">{{item.lyric}}</text>
+          </view>
+        </view>
       </block>
     </view>
     <!-- 播放列表栏 -->

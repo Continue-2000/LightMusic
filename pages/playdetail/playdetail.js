@@ -1,6 +1,7 @@
 // pages/playdetail/playdetail.js
 import request from "../../utils/request";
 import moment from "moment";
+import { handleAnalyzeLyrics } from "../../utils/function";
 var appInstance = getApp();
 Page({
   /**
@@ -86,6 +87,7 @@ Page({
         this.BackgroundAudioManager.currentTime * 1000
       ).format("mm:ss");
       // 修改进度条长度
+      //移动滚动条
       this.handleLyricTrans(this.BackgroundAudioManager.currentTime);
       let processLength =
         528.28 *
@@ -96,16 +98,6 @@ Page({
       });
     });
     const query = this.createSelectorQuery();
-    // query
-    //   .select(".lyricArea")
-    //   .boundingClientRect((res) => {
-    //     console.log("lyricArea", res);
-    //     this.setData({
-    //       lyricArea: res,
-    //     });
-    //   })
-    //   .exec();
-
     query.select(".lyricArea").node(function (res) {
       console.log("lyricArea", res);
     });
@@ -303,66 +295,16 @@ Page({
   // 获取歌词
   async getLyric(id) {
     let res = await request("/lyric", { id });
-    this.handleAnalyzeLyrics(res.lrc.lyric);
+    let LyricObjArr = handleAnalyzeLyrics(res.lrc.lyric);
     this.setData({
       lyricIndex: 0,
       upDistance: 0,
-    });
-  },
-  //解析歌词
-  handleAnalyzeLyrics(lyric) {
-    if (lyric === "") {
-      return { lyric: [{ time: 0, lyric: "这个地方没有歌词！", uid: 520520 }] };
-    }
-    let LyricObjArr = [];
-    let LyricArr = lyric.split(/\n/);
-    // 匹配中括号里正则的
-    const regTime = /\d{2}:\d{2}.\d{2,3}/;
-    // 循环遍历歌曲数组
-    for (let i = 0; i < LyricArr?.length; i++) {
-      if (LyricArr[i] === "") continue;
-      const time = this.formatLyricTime(LyricArr[i].match(regTime)[0]);
-      if (LyricArr[i].split("]")[1] !== "") {
-        LyricObjArr.push({
-          time: time,
-          lyric: LyricArr[i].split("]")[1],
-          uid: parseInt(Math.random().toString().slice(-6)),
-        });
-      }
-    }
-    this.setData({
       LyricObjArr,
     });
-    console.log("LyricObjArr", LyricObjArr);
-  },
-  //格式化时间
-  formatLyricTime(time) {
-    const regMin = /.*:/;
-    const regSec = /:.*\./;
-    const regMs = /\./;
-
-    const min = parseInt(time.match(regMin)[0].slice(0, 2));
-    let sec = parseInt(time.match(regSec)[0].slice(1, 3));
-    const ms = time.slice(
-      time.match(regMs).index + 1,
-      time.match(regMs).index + 3
-    );
-    if (min !== 0) {
-      sec += min * 60;
-    }
-    return Number(sec + "." + ms);
   },
   // 滚动
   handleLyricTrans(currentSecond) {
-    let {
-      LyricObjArr,
-      lyricIndex,
-      flag,
-      lyricHeight,
-      lyricScrollHeight,
-      lyricArea,
-      upDistance,
-    } = this.data;
+    let { LyricObjArr, lyricIndex, flag, upDistance } = this.data;
     let len = LyricObjArr.length;
     let item = lyricIndex < len ? LyricObjArr[lyricIndex + 1] : {};
     if (flag && currentSecond > item.time) {
@@ -374,24 +316,14 @@ Page({
         flag = false;
         return;
       }
-      // if (lyricArea) {
-      //   lyricArea.scrollTo(0);
-      // }
       if (lyricIndex > 4) {
         this.setData({
           upDistance: upDistance - 60,
         });
       }
-      // lyricScrollHeight += lyricItems[lyricIndex].offsetHeight;
-      // if (lyricArea) {
-      //   let lyricItems = lyricArea.querySelectorAll("view");
-      //   lyricArea.style.transform = `translateY(${
-      //     lyricHeight - lyricScrollHeight
-      //   }px)`;
-      // }
+
       this.setData({
         lyricIndex,
-        lyricScrollHeight,
       });
       console.log("lyricIndex", lyricIndex);
     }

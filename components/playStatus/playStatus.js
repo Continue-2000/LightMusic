@@ -1,6 +1,6 @@
 // components/playStatus/playStatus.js
-import { handleToPlay } from "../../utils/function"
-var appInstance = getApp()
+import { handleToPlay } from "../../utils/function";
+var appInstance = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -8,24 +8,24 @@ Component({
   properties: {
     isShow: {
       type: Boolean,
-      value: false
+      value: false,
     },
     playing: {
-      type: Boolean
+      type: Boolean,
     },
     playSong: {
       type: Object,
     },
     playList: {
-      type: Array
+      type: Array,
     },
     playIndex: {
-      type: Number
+      type: Number,
     },
     backgroundAudioManager: {
       type: Object,
-      value: {}
-    }
+      value: {},
+    },
   },
 
   /**
@@ -33,8 +33,8 @@ Component({
    */
   data: {
     isLookSongList: false,
-    List: [],//查看播放的列表
-    ListHeight: 240,//查看列表的高度
+    List: [], //查看播放的列表
+    ListHeight: 240, //查看列表的高度
   },
 
   /**
@@ -43,34 +43,32 @@ Component({
   methods: {
     // 播放、暂停
     handlePlayStatus() {
-      let { playing, backgroundAudioManager } = this.data
-      playing = !playing
+      let { playing, backgroundAudioManager } = this.data;
+      playing = !playing;
       if (playing) {
-        backgroundAudioManager.play()
-      }
-      else
-        backgroundAudioManager.pause()
+        backgroundAudioManager.play();
+      } else backgroundAudioManager.pause();
       this.setData({
-        playing
-      })
+        playing,
+      });
     },
     // 前往播放页
     handlePlay() {
-      let { playIndex, playList } = this.data
-      handleToPlay(playIndex, playList)
+      let { playIndex, playList } = this.properties;
+      handleToPlay(playIndex, playList);
     },
     // 打开列表栏
     handleLookSongList() {
       console.log(1);
       this.setData({
         isLookSongList: !this.data.isLookSongList,
-        List: this.data.playList
-      })
+        List: this.data.playList,
+      });
     },
     handleToPlayDetail(e) {
-      let { playList } = this.data
-      this.handleLookSongList()
-      handleToPlay(e.currentTarget.dataset.index, playList)
-    }
-  }
-})
+      let { playList } = this.data;
+      this.handleLookSongList();
+      handleToPlay(e.currentTarget.dataset.index, playList);
+    },
+  },
+});

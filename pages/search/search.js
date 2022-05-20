@@ -1,7 +1,7 @@
 // pages/search/search.js
 import request from "../../utils/request.js";
 import { handleToSearchDetail } from "../../utils/function";
-let timer;
+import { debounce } from "../../utils/toolfunction";
 Page({
   /**
    * 页面的初始数据
@@ -95,19 +95,13 @@ Page({
   handleInputChange(e) {
     // console.log(e);
     let inputValue = e.detail.value;
-    this.setData({
-      inputValue,
-    });
-    // 防抖优化
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => {
-      if (inputValue.length != 0) this.getSearchList(inputValue);
-      else {
-        this.setData({
-          searchList: [],
-        });
-      }
-    }, 300);
+    if (inputValue.length != 0) this.getSearchList(inputValue);
+    else {
+      this.setData({
+        inputValue,
+        searchList: [],
+      });
+    }
   },
   // 获取搜素到的列表
   async getSearchList(keywords) {

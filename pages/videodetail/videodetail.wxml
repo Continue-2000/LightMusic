@@ -1,9 +1,11 @@
-<view class="videoDetailContainer" bindtouchstart='handleTouchStart' bindtouchmove='handleTouchMove' bindtouchend='handleTouchEnd' style='transform:{{translateY}} ;  transition: {{transition}};'>
+<view class="videoDetailContainer" >
+  <swiper class="videoSwiper" bindchange="handleChangeSwiper" vertical>
+    <swiper-item wx:for="{{playList}}" wx:key="id" >
   <!-- 弹幕滚动区域 -->
   <view class="bulletChat">弹幕区</view>
   <!-- 视频播放区域 -->
   <view class="video {{isLookComment?'moveVideo':''}}" >
-    <video loop enable-danmu autoplay object-fit='cover' src='{{playUrl}}' id="myVideo" bindtap='videoClick'></video>
+    <video loop enable-danmu  object-fit='cover' enable-danmu 	danmu-btn src='{{item.playUrl}}' id="myVideo{{index}}" bindtap='videoClick'></video>
   </view>
   <!-- 信息区 -->
   <view class="info">
@@ -12,12 +14,12 @@
       <view class="content">
         <!-- 头像区域 -->
         <view class="header">
-          <image src='{{playInfo.cover||playInfo.creator.avatarUrl}}' />
-          <text class="authorName">{{playInfo.artistName||playInfo.creator.nickname}}</text>
+          <image src='{{item.playInfo.cover||item.playInfo.creator.avatarUrl}}' />
+          <text class="authorName">{{item.playInfo.artistName||item.playInfo.creator.nickname}}</text>
         </view>
-        <text class="videoName">{{playInfo.name}}</text>
-        <text wx:if="{{playInfo.playCount}}" class="watchNums">{{playInfo.playCount}}次观看</text>
-        <text wx:if='{{playInfo.title}}' class="title">{{playInfo.title}}</text>
+        <text class="videoName">{{item.playInfo.name}}</text>
+        <text wx:if="{{item.playInfo.playCount}}" class="watchNums">{{item.playInfo.playCount}}次观看</text>
+        <text wx:if='{{item.playInfo.title}}' class="title">{{item.playInfo.title}}</text>
       </view>
     </view>
     <!-- 点赞收藏等区域 -->
@@ -25,15 +27,15 @@
       <!-- 点赞 -->
       <view class="control-item">
         <view class="iconfont  icon-dianzan"></view>
-        <text>{{playInfo.subCount||playInfo.praisedCount}}</text>
+        <text>{{item.playInfo.subCount||item.playInfo.praisedCount}}</text>
       </view>
       <view class="control-item" bindtap='handleLookComment'>
         <view class="iconfont    icon-pinglun"></view>
-        <text>{{playInfo.commentCount}}</text>
+        <text>{{item.playInfo.commentCount}}</text>
       </view>
       <view class="control-item">
         <view class="iconfont  icon-zhuanfa"></view>
-        <text>{{playInfo.shareCount}}</text>
+        <text>{{item.playInfo.shareCount}}</text>
       </view>
       <view class="control-item">
         <view class="iconfont    icon-shoucang"></view>
@@ -41,5 +43,11 @@
       </view>
     </view>
   </view>
-
+  </swiper-item>
+  <block wx:if="{{isLookComment}}">
+    <!-- comment模板 -->
+    <import src="/template/comment/comment.wxml"></import>
+    <template is="comment" data="{{comments,isReply,replayNickName}}"/>
+  </block>
+  </swiper>
 </view>

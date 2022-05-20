@@ -8,7 +8,7 @@
     flex-direction: column;
     align-items: center;
     background-image: "/static/images/header.jpg";
-    background: linear-gradient(#ADADAD,#DBD8D8);
+    background: linear-gradient(#3d3d3d,#1f1f1f);
   }
   .midContent{
     display: flex;
@@ -48,6 +48,33 @@
       font-size: 30rpx;
       color: rgb(238, 236, 236) !important;
   }
+  /* 歌词区域 */
+.lyricView{
+  margin-top: 60rpx;
+  height: 780rpx;
+  overflow: auto;
+}
+/* 歌词区域 */
+.lyricArea{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 32rpx;
+  color: #aaa;
+  transition: .3s;
+}
+.lyricArea text{
+  height: 60rpx;
+  line-height: 60rpx;
+  max-width: 80%;
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+.lyricing{
+  color: #fff;
+}
   .buttomcontrol{
     display: flex;
     position: relative;
